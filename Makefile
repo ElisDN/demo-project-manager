@@ -1,31 +1,14 @@
-dev-up:
-	docker network create app
-	docker run -d --name manager-php-fpm -v ${PWD}/manager:/app --network=app manager-php-fpm
-	docker run -d --name manager-nginx -v ${PWD}/manager:/app -p 8080:80 --network=app manager-nginx
+docker-up:
+	docker-compose up -d
 
-dev-down:
-	docker stop manager-nginx
-	docker stop manager-php-fpm
-	docker rm manager-nginx
-	docker rm manager-php-fpm
-	docker network remove app
+docker-down:
+	docker-compose down --remove-orphans
 
-dev-build:
-	docker build --file=manager/docker/development/nginx.docker --tag manager-nginx manager/docker/development
-	docker build --file=manager/docker/development/php-fpm.docker --tag manager-php-fpm manager/docker/development
-	docker build --file=manager/docker/development/php-cli.docker --tag manager-php-cli manager/docker/development
+docker-pull:
+	docker-compose pull
 
-dev-cli:
-	docker run --rm -v ${PWD}/manager:/app manager-php-cli php bin/app.php
+docker-build:
+	docker-compose build
 
-prod-up:
-	docker run -d --name manager-php-fpm manager-php-fpm
-	docker run -d --name manager-nginx -p 8080:80 manager-nginx
-
-prod-build:
-	docker build --file=manager/docker/production/nginx.docker --tag manager-php-fpm manager
-	docker build --file=manager/docker/production/php-fpm.docker --tag manager-php-fpm manager
-	docker build --file=manager/docker/production/php-cli.docker --tag manager-php-cli manager
-
-prod-cli:
-	docker run --rm manager-php-cli php bin/app.php
+cli:
+	docker-compose run --rm manager-php-cli php bin/app.php
