@@ -8,6 +8,8 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 WORKDIR /app
 
-COPY ./ ./
+COPY ./composer.json ./composer.lock ./
 
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
+
+COPY ./ ./
