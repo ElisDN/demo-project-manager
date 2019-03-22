@@ -14,11 +14,15 @@ services:
         build:
             context: ./manager/docker/development
             dockerfile: php-fpm.docker
+        environment:
+            APP_DEBUG: 1
         volumes:
             - ./manager:/app
     manager-php-cli:
         build:
             context: ./manager/docker/development
             dockerfile: php-cli.docker
+        environment:
+            APP_DEBUG: 1
         volumes:
             - ./manager:/app
