@@ -13,12 +13,22 @@ services:
         build:
             context: ./manager/docker/development
             dockerfile: php-fpm.docker
+        environment:
+            APP_ENV: dev
+            APP_SECRET: secret
+            DATABASE_URL: pgsql://app:secret@manager-postgres:5432/app
+            MAILER_URL: null://localhost
         volumes:
             - ./manager:/app
     manager-php-cli:
         build:
             context: ./manager/docker/development
             dockerfile: php-cli.docker
+        environment:
+            APP_ENV: dev
+            APP_SECRET: secret
+            DATABASE_URL: pgsql://app:secret@manager-postgres:5432/app
+            MAILER_URL: null://localhost
         volumes:
             - ./manager:/app
             - composer:/root/.composer/cache
