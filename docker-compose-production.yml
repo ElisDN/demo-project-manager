@@ -10,9 +10,5 @@ services:
     manager-php-fpm:
         image: ${REGISTRY_ADDRESS}/manager-php-fpm:${IMAGE_TAG}
         restart: always
-        environment:
-            APP_DEBUG: 0
     manager-php-cli:
         image: ${REGISTRY_ADDRESS}/manager-php-cli:${IMAGE_TAG}
-        environment:
-            APP_DEBUG: 0
