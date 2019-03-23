@@ -10,5 +10,13 @@ services:
     manager-php-fpm:
         image: ${REGISTRY_ADDRESS}/manager-php-fpm:${IMAGE_TAG}
         restart: always
+        environment:
+            APP_SECRET: ${MANAGER_APP_SECRET}
+            DATABASE_URL: pgsql://app:${MANAGER_DB_PASSWORD}@manager-postgres:5432/app
+            MAILER_URL: null://localhost
     manager-php-cli:
         image: ${REGISTRY_ADDRESS}/manager-php-cli:${IMAGE_TAG}
+        environment:
+            APP_SECRET: ${MANAGER_APP_SECRET}
+            DATABASE_URL: pgsql://app:${MANAGER_DB_PASSWORD}@manager-postgres:5432/app
+            MAILER_URL: null://localhost
