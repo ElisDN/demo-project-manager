@@ -25,3 +25,7 @@ services:
             APP_DEBUG: 1
         volumes:
             - ./manager:/app
+            - composer:/root/.composer/cache
+
+volumes:
+    composer:
