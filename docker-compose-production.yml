@@ -14,9 +14,25 @@ services:
             APP_SECRET: ${MANAGER_APP_SECRET}
             DATABASE_URL: pgsql://app:${MANAGER_DB_PASSWORD}@manager-postgres:5432/app
             MAILER_URL: null://localhost
+        depends_on:
+            - manager-postgres
     manager-php-cli:
         image: ${REGISTRY_ADDRESS}/manager-php-cli:${IMAGE_TAG}
         environment:
             APP_SECRET: ${MANAGER_APP_SECRET}
             DATABASE_URL: pgsql://app:${MANAGER_DB_PASSWORD}@manager-postgres:5432/app
             MAILER_URL: null://localhost
+        depends_on:
+            - manager-postgres
+    manager-postgres:
+        image: ${REGISTRY_ADDRESS}/manager-postgres:${IMAGE_TAG}
+        restart: always
+        volumes:
+            - manager-postgres:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: app
+            POSTGRES_PASSWORD: ${MANAGER_DB_PASSWORD}
+            POSTGRES_DB: app
+
+volumes:
+    manager-postgres:
