@@ -5,9 +5,10 @@
 {% block body %}
     <h1>Edit Post</h1>
 
+    <div class="controls">
+        <a href="{{ path('post_index') }}" class="btn btn-primary">Back to list</a>
+        {{ include('post/_delete_form.html.twig') }}
+    </div>
+
     {{ include('post/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('post_index') }}">back to list</a>
-
-    {{ include('post/_delete_form.html.twig') }}
 {% endblock %}
