@@ -5,7 +5,13 @@
 {% block body %}
     <h1>Post</h1>
 
-    <table class="table">
+    <div class="d-flex mb-3 controls">
+        <a href="{{ path('post_index') }}" class="btn btn-primary">Back to list</a>
+        <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-primary">Edit</a>
+        {{ include('post/_delete_form.html.twig') }}
+    </div>
+
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -21,10 +27,4 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('post_index') }}">back to list</a>
-
-    <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
-
-    {{ include('post/_delete_form.html.twig') }}
 {% endblock %}

@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Create new Post</h1>
 
-    {{ include('post/_form.html.twig') }}
+    <div class="d-flex mb-3 controls">
+        <a href="{{ path('post_index') }}" class="btn btn-primary">Back to list</a>
+    </div>
 
-    <a href="{{ path('post_index') }}">back to list</a>
+    {{ include('post/_form.html.twig') }}
 {% endblock %}
