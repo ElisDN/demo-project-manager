@@ -23,6 +23,8 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800
                 path: /
+            logout:
+                path: app_logout
 
             # activate different ways to authenticate
 
