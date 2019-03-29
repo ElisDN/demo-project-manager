@@ -9,16 +9,26 @@ class User
     /**
      * @var string
      */
+    private $id;
+    /**
+     * @var string
+     */
     private $email;
     /**
      * @var string
      */
     private $passwordHash;
 
-    public function __construct(string $email, string $hash)
+    public function __construct(string $id, string $email, string $hash)
     {
+        $this->id = $id;
         $this->email = $email;
         $this->passwordHash = $hash;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getEmail(): string
