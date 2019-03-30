@@ -15,7 +15,7 @@ class RequestTest extends TestCase
         $now = new \DateTimeImmutable();
         $token = new ResetToken('token', $now->modify('+1 day'));
 
-        $user = (new UserBuilder())->viaEmail()->build();
+        $user = (new UserBuilder())->viaEmail()->confirmed()->build();
 
         $user->requestPasswordReset($token, $now);
 
@@ -27,7 +27,7 @@ class RequestTest extends TestCase
         $now = new \DateTimeImmutable();
         $token = new ResetToken('token', $now->modify('+1 day'));
 
-        $user = (new UserBuilder())->viaEmail()->build();
+        $user = (new UserBuilder())->viaEmail()->confirmed()->build();
 
         $user->requestPasswordReset($token, $now);
 
@@ -39,7 +39,7 @@ class RequestTest extends TestCase
     {
         $now = new \DateTimeImmutable();
 
-        $user = (new UserBuilder())->viaEmail()->build();
+        $user = (new UserBuilder())->viaEmail()->confirmed()->build();
 
         $token1 = new ResetToken('token', $now->modify('+1 day'));
         $user->requestPasswordReset($token1, $now);
@@ -50,6 +50,17 @@ class RequestTest extends TestCase
         $user->requestPasswordReset($token2, $now->modify('+2 day'));
 
         self::assertEquals($token2, $user->getResetToken());
+    }
+
+    public function testNotConfirmed(): void
+    {
+        $now = new \DateTimeImmutable();
+        $token = new ResetToken('token', $now->modify('+1 day'));
+
+        $user = (new UserBuilder())->viaEmail()->build();
+
+        $this->expectExceptionMessage('User is not active.');
+        $user->requestPasswordReset($token, $now);
     }
 
     public function testWithoutEmail(): void
