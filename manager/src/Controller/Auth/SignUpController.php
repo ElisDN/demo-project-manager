@@ -48,4 +48,25 @@ class SignUpController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/signup/{token}", name="auth.signup.confirm")
+     * @param string $token
+     * @param SignUp\Confirm\Handler $handler
+     * @return Response
+     */
+    public function confirm(string $token, SignUp\Confirm\Handler $handler): Response
+    {
+        $command = new SignUp\Confirm\Command($token);
+
+        try {
+            $handler->handle($command);
+            $this->addFlash('success', 'Email is successfully confirmed.');
+            return $this->redirectToRoute('home');
+        } catch (\DomainException $e) {
+            $this->logger->error($e->getMessage(), ['exception' => $e]);
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('home');
+        }
+    }
 }
