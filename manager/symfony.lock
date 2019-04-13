@@ -99,6 +99,9 @@
     "fig/link-util": {
         "version": "1.0.0"
     },
+    "finesse/swiftmailer-defaults-plugin": {
+        "version": "v2.0.3"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
