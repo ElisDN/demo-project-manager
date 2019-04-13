@@ -57,8 +57,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException('');
         }
 
-        // Load / create our user however you need.
-        // You can do this by calling the user provider, or with custom logic here.
         $user = $userProvider->loadUserByUsername($credentials['email']);
 
         if (!$user) {
