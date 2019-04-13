@@ -9,6 +9,7 @@ security:
             security: false
         main:
             anonymous: true
+            user_checker: App\Security\UserChecker
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
