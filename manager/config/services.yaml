@@ -28,3 +28,10 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Model\User\Service\ConfirmTokenSender:
         $from: {'%env(MAILER_FROM_EMAIL)%': '%env(MAILER_FROM_NAME)%'}
+
+    App\Model\User\Service\ResetTokenSender:
+        $from: {'%env(MAILER_FROM_EMAIL)%': '%env(MAILER_FROM_NAME)%'}
+
+    App\Model\User\Service\ResetTokenizer:
+        factory: 'App\Container\Model\User\Service\ResetTokenizerFactory:create'
+        arguments: ['PT1H']
