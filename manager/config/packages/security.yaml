@@ -11,6 +11,10 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
 
             # activate different ways to authenticate
 
