@@ -19,18 +19,15 @@
             <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
         </div>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
-
+        <div class="form-group">
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" name="_remember_me"> Remember me
                 </label>
             </div>
-        #}
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Log In</button>
