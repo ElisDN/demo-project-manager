@@ -34,8 +34,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('auth.signup') }}">Sign Up</a>
                     </li>
                 </ul>
             </div>
@@ -46,6 +49,7 @@
 <main role="main" class="flex-shrink-0">
     <div class="container">
         {% block breadcrumbs %}{% endblock %}
+        {% include '_flashes.html.twig' %}
         {% block body %}{% endblock %}
     </div>
 </main>
