@@ -8,9 +8,13 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@coreui/coreui": "^2.1.9",
         "bootstrap": "^4.3.1",
+        "font-awesome": "^4.7.0",
         "jquery": "^3.4.0",
-        "popper.js": "^1.15.0"
+        "perfect-scrollbar": "^1.4.0",
+        "popper.js": "^1.15.0",
+        "simple-line-icons": "^2.4.1"
     },
     "devDependencies": {
         "@symfony/webpack-encore": "^0.27.0",
