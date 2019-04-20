@@ -17,6 +17,7 @@ services:
             - ./manager:/app
         depends_on:
             - manager-postgres
+            - manager-redis
             - mailer
     manager-php-cli:
         build:
@@ -27,6 +28,7 @@ services:
             - composer:/root/.composer/cache
         depends_on:
             - manager-postgres
+            - manager-redis
             - mailer
     manager-node-watch:
         image: node:11.13-alpine
@@ -49,6 +51,11 @@ services:
             POSTGRES_DB: app
         ports:
             - "54321:5432"
+    manager-redis:
+        image: redis:3.0-alpine
+        volumes:
+            - manager-redis:/data
+        command: redis-server --requirepass secret
 
     mailer:
         image: mailhog/mailhog
@@ -57,4 +64,5 @@ services:
 
 volumes:
     manager-postgres:
+    manager-redis:
     composer:
