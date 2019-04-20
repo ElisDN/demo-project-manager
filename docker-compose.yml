@@ -28,6 +28,11 @@ services:
         depends_on:
             - manager-postgres
             - mailer
+    manager-node:
+        image: node:11.13-alpine
+        volumes:
+            - ./manager:/app
+        working_dir: /app
     manager-postgres:
         image: postgres:11.2-alpine
         volumes:
