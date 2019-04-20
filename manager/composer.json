@@ -6,6 +6,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "finesse/swiftmailer-defaults-plugin": "^2.0",
+        "knpuniversity/oauth2-client-bundle": "^1.28",
+        "league/oauth2-facebook": "^2.0",
         "ramsey/uuid": "^3.8",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.2.*",
