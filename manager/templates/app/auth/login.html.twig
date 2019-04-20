@@ -1,42 +1,76 @@
-{% extends 'base.html.twig' %}
+{% extends 'auth.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-group">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            {% include '_flashes.html.twig' %}
 
-        <h1>Log In</h1>
+                            <h1>Log In</h1>
 
-        <div class="form-group">
-            <label for="inputEmail" class="sr-only control-label required">Email</label>
-            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="sr-only control-label required">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        </div>
-
-        <div class="form-group">
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
-                </label>
+                            <p class="text-muted">Sign In to your account</p>
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+                            <form method="post">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-envelope"></i></span>
+                                    </div>
+                                    <input class="form-control" type="email" name="email" value="{{ last_username }}" placeholder="Email" />
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-lock"></i></span>
+                                    </div>
+                                    <input class="form-control" type="password" name="password" placeholder="Password" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" name="_remember_me"> <span class="text-muted">Remember me</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-primary px-4" type="submit">Login</button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <a class="btn btn-link px-0" href="{{ path('auth.reset') }}">Forgot
+                                            password?</a>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr />
+                            <div class="row">
+                                <div class="col-12">
+                                    <a class="btn btn-block btn-facebook" href="{{ path('oauth.facebook') }}">
+                                        <span>facebook</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+                        <div class="card-body text-center">
+                            <div>
+                                <h2>Sign up</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.</p>
+                                <a class="btn btn-primary active mt-3" href="{{ path('auth.signup') }}">Register
+                                    Now!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit">Log In</button>
-        </div>
-
-        <hr />
-
-        <p>
-            <a href="{{ path('oauth.facebook') }}" class="btn btn-primary">Log In via Facebook</a>
-        </p>
-    </form>
+    </div>
 {% endblock %}
