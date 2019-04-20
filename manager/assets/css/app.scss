@@ -1,3 +1,4 @@
+@import "variables";
 @import "~@coreui/coreui/scss/coreui";
 @import "~simple-line-icons/scss/simple-line-icons";
 @import "~font-awesome/scss/font-awesome";
@@ -5,6 +6,12 @@
 main {
     & > .container {
         padding: 80px 15px 0;
+    }
+}
+
+.main {
+    .container-fluid {
+        padding: 0 20px;
     }
 }
 
