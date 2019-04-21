@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item active">Profile</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">Profile</div>
+        <div class="card-body">
+            <table class="table table-bordered mb-0">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Created</th>
+                        <td>{{ user.date|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                    {% if user.email %}
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Role</th>
+                        <td>{{ user.role }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ user.status }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if user.networks %}
+        <div class="card">
+            <div class="card-header">Networks</div>
+            <div class="card-body">
+                <table class="table table-bordered mb-0">
+                    <tbody>
+                        {% for network in user.networks %}
+                            <tr>
+                                <th>{{ network.network }}</th>
+                                <td>{{ network.identity }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
