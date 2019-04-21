@@ -45,3 +45,7 @@ services:
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:
             - '@Predis\Client'
+
+    App\Widget\:
+        resource: '../src/Widget'
+        tags: ['twig.extension']
