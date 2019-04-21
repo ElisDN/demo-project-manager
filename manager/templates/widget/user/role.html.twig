@@ -1,0 +1,5 @@
+{% if role == 'ROLE_USER' %}
+    <span class="badge badge-secondary">User</span>
+{% elseif role == 'ROLE_ADMIN' %}
+    <span class="badge badge-success">Admin</span>
+{% endif %}
