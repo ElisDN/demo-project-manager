@@ -17,7 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
-    private const STATUS_NEW = 'new';
     private const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
 
@@ -145,11 +144,6 @@ class User
             throw new \DomainException('Role is already same.');
         }
         $this->role = $role;
-    }
-
-    public function isNew(): bool
-    {
-         return $this->status === self::STATUS_NEW;
     }
 
     public function isWait(): bool
