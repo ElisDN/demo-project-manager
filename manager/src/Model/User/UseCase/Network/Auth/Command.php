@@ -14,6 +14,14 @@ class Command
      * @var string
      */
     public $identity;
+    /**
+     * @var string
+     */
+    public $firstName;
+    /**
+     * @var string
+     */
+    public $lastName;
 
     public function __construct(string $network, string $identity)
     {
