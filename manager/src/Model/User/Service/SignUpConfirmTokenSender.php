@@ -7,7 +7,7 @@ namespace App\Model\User\Service;
 use App\Model\User\Entity\User\Email;
 use Twig\Environment;
 
-class ConfirmTokenSender
+class SignUpConfirmTokenSender
 {
     private $mailer;
     private $twig;
