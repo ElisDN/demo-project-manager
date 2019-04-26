@@ -44,11 +44,11 @@
         </div>
     </div>
 
-    {% if user.networks %}
-        <div class="card">
-            <div class="card-header">Networks</div>
-            <div class="card-body">
-                <table class="table table-bordered mb-0">
+    <div class="card">
+        <div class="card-header">Networks</div>
+        <div class="card-body">
+            {% if user.networks %}
+                <table class="table table-bordered">
                     <tbody>
                         {% for network in user.networks %}
                             <tr>
@@ -58,8 +58,9 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            </div>
+            {% endif %}
+            <a href="{{ path('profile.oauth.facebook') }}" class="btn btn-facebook">Attach Facebook</a>
         </div>
-    {% endif %}
+    </div>
 
 {% endblock %}
