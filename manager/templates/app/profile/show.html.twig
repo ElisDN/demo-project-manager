@@ -61,6 +61,19 @@
                             <tr>
                                 <th>{{ network.network }}</th>
                                 <td>{{ network.identity }}</td>
+                                <td>
+                                    <form
+                                            action="{{ url('profile.oauth.detach', {network: network.network, identity: network.identity}) }}"
+                                            method="post"
+                                            onsubmit="return confirm('Are you sure?')"
+                                    >
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
