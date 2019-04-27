@@ -12,6 +12,10 @@
 
 {% block body %}
 
+    <div class="controls">
+        <a href="{{ path('users.edit', {'id': user.id}) }}" class="btn btn-primary">Edit</a>
+    </div>
+
     <div class="box">
         <table class="table table-bordered">
             <tbody>
