@@ -23,7 +23,7 @@
                 <button type="submit" class="btn btn-success">Confirm</button>
             </form>
         {% endif %}
-        {% if user.active %}
+        {% if user.active and user.id.value != app.user.id %}
             <form action="{{ path('users.block', {'id': user.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
                 <input type="hidden" name="token" value="{{ csrf_token('block') }}" />
                 <button type="submit" class="btn btn-danger">Block</button>
