@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\ReadModel\User;
 
+use App\ReadModel\User\Filter\Filter;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 
@@ -156,9 +157,13 @@ class UserFetcher
         return $detail;
     }
 
-    public function all(): array
+    /**
+     * @param Filter $filter
+     * @return array[]
+     */
+    public function all(Filter $filter): array
     {
-        $stmt = $this->connection->createQueryBuilder()
+        $qb = $this->connection->createQueryBuilder()
             ->select(
                 'id',
                 'date',
@@ -168,8 +173,29 @@ class UserFetcher
                 'status'
             )
             ->from('user_users')
-            ->orderBy('date', 'desc')
-            ->execute();
+            ->orderBy('date', 'desc');
+
+        if ($filter->name) {
+            $qb->andWhere($qb->expr()->like('LOWER(CONCAT(name_first, \' \', name_last))', ':name'));
+            $qb->setParameter(':name', '%' . mb_strtolower($filter->name) . '%');
+        }
+
+        if ($filter->email) {
+            $qb->andWhere($qb->expr()->like('LOWER(email)', ':email'));
+            $qb->setParameter(':email', '%' . mb_strtolower($filter->email) . '%');
+        }
+
+        if ($filter->status) {
+            $qb->andWhere('status = :status');
+            $qb->setParameter(':status', $filter->status);
+        }
+
+        if ($filter->role) {
+            $qb->andWhere('role = :role');
+            $qb->setParameter(':role', $filter->role);
+        }
+
+        $stmt = $qb->execute();
 
         return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
     }
