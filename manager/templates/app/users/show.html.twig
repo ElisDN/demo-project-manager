@@ -23,6 +23,18 @@
                 <button type="submit" class="btn btn-success">Confirm</button>
             </form>
         {% endif %}
+        {% if user.active %}
+            <form action="{{ path('users.block', {'id': user.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                <input type="hidden" name="token" value="{{ csrf_token('block') }}" />
+                <button type="submit" class="btn btn-danger">Block</button>
+            </form>
+        {% endif %}
+        {% if user.blocked %}
+            <form action="{{ path('users.activate', {'id': user.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                <input type="hidden" name="token" value="{{ csrf_token('activate') }}" />
+                <button type="submit" class="btn btn-success">Activate</button>
+            </form>
+        {% endif %}
     </div>
 
     <div class="box">
