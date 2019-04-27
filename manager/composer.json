@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "finesse/swiftmailer-defaults-plugin": "^2.0",
+        "knplabs/knp-paginator-bundle": "^3.0",
         "knpuniversity/oauth2-client-bundle": "^1.28",
         "league/oauth2-facebook": "^2.0",
         "predis/predis": "^1.1",

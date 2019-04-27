@@ -1,0 +1,13 @@
+knp_paginator:
+    page_range: 5
+    default_options:
+        page_name: page
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true
+        filter_field_name: filterField
+        filter_value_name: filterValue
+    template:
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
+        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'
+        filtration: '@KnpPaginator/Pagination/filtration.html.twig'
