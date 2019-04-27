@@ -14,17 +14,23 @@ class Form extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', Type\TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Name']])
-            ->add('email', Type\TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Email']])
+            ->add('name', Type\TextType::class, ['required' => false, 'attr' => [
+                'placeholder' => 'Name',
+                'onchange' => 'this.form.submit()',
+            ]])
+            ->add('email', Type\TextType::class, ['required' => false, 'attr' => [
+                'placeholder' => 'Email',
+                'onchange' => 'this.form.submit()',
+            ]])
             ->add('status', Type\ChoiceType::class, ['choices' => [
                 'Wait' => User::STATUS_WAIT,
                 'Active' => User::STATUS_ACTIVE,
                 'Blocked' => User::STATUS_BLOCKED,
-            ], 'required' => false, 'placeholder' => 'All statuses'])
+            ], 'required' => false, 'placeholder' => 'All statuses', 'attr' => ['onchange' => 'this.form.submit()']])
             ->add('role', Type\ChoiceType::class, ['choices' => [
                 'User' => Role::USER,
                 'Admin' => Role::ADMIN,
-            ], 'required' => false, 'placeholder' => 'All roles']);
+            ], 'required' => false, 'placeholder' => 'All roles', 'attr' => ['onchange' => 'this.form.submit()']]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
