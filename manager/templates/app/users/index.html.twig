@@ -26,7 +26,7 @@
             {% for user in users %}
                 <tr>
                     <td>{{ user.date|date('Y-m-d') }}</td>
-                    <td>{{ user.name }}</td>
+                    <td><a href="{{ path('users.show', {'id': user.id}) }}">{{ user.name }}</a></td>
                     <td>{{ user.email }}</td>
                     <td>{{ user_role(user.role) }}</td>
                     <td>{{ user_status(user.status) }}</td>
