@@ -199,6 +199,11 @@ class UsersController extends AbstractController
             return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
         }
 
+        if ($user->getId()->getValue() === $this->getUser()->getId()) {
+            $this->addFlash('error', 'Unable to block yourself.');
+            return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
+        }
+
         $command = new Block\Command($user->getId()->getValue());
 
         try {
