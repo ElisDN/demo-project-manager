@@ -9,5 +9,5 @@ knp_paginator:
         filter_value_name: filterValue
     template:
         pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
-        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'
+        sortable: 'override/sortable_link.html.twig'
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'
