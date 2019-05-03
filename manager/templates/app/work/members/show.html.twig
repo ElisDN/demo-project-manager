@@ -13,6 +13,8 @@
 
 {% block body %}
 
+    {{ include('app/work/members/_tabs.html.twig') }}
+
     <div class="controls">
         <a href="{{ path('work.members.edit', {'id': member.id}) }}" class="btn btn-primary">Edit</a>
         <a href="{{ path('work.members.move', {'id': member.id}) }}" class="btn btn-primary">Move</a>
