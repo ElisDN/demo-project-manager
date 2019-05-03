@@ -35,6 +35,13 @@
                 <button type="submit" class="btn btn-success">Activate</button>
             </form>
         {% endif %}
+        {% if is_granted('ROLE_WORK_MANAGE_MEMBERS') %}
+            {% if member %}
+                <a href="{{ path('work.members.show', {'id': member.id}) }}" class="btn btn-primary">View Member</a>
+            {% else %}
+                <a href="{{ path('work.members.create', {'id': user.id}) }}" class="btn btn-primary">Create Member</a>
+            {% endif %}
+        {% endif %}
     </div>
 
     <div class="box">
@@ -47,10 +54,6 @@
                 <tr>
                     <th>Email</th>
                     <td>{{ user.email ? user.email.value : '' }}</td>
-                </tr>
-                <tr>
-                    <th>ID</th>
-                    <td>{{ user.id.value }}</td>
                 </tr>
                 <tr>
                     <th>Created</th>
