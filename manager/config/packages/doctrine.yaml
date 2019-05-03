@@ -22,6 +22,9 @@ doctrine:
             user_user_email: 'App\Model\User\Entity\User\EmailType'
             user_user_role: 'App\Model\User\Entity\User\RoleType'
             work_members_group_id: 'App\Model\Work\Entity\Members\Group\IdType'
+            work_members_member_id: 'App\Model\Work\Entity\Members\Member\IdType'
+            work_members_member_email: 'App\Model\Work\Entity\Members\Member\EmailType'
+            work_members_member_status: 'App\Model\Work\Entity\Members\Member\StatusType'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore

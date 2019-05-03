@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Members{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.members') }}">Members</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.members.show', {'id': member.id}) }}">{{ user.name.full }}</a></li>
+        <li class="breadcrumb-item active">Move</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-body">
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">Move</button>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+{% endblock %}
