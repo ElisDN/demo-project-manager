@@ -54,5 +54,9 @@ services:
         resource: '../src/Widget'
         tags: ['twig.extension']
 
+    App\Menu\SidebarMenu:
+        tags:
+            - { name: knp_menu.menu_builder, method: build, alias: sidebar }
+
     Symfony\Component\HttpFoundation\Session\Session:
         alias: Symfony\Component\HttpFoundation\Session\SessionInterface

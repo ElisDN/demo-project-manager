@@ -132,6 +132,12 @@
     "knplabs/knp-components": {
         "version": "v1.3.10"
     },
+    "knplabs/knp-menu": {
+        "version": "2.3.0"
+    },
+    "knplabs/knp-menu-bundle": {
+        "version": "v2.2.1"
+    },
     "knplabs/knp-paginator-bundle": {
         "version": "v3.0.0"
     },
