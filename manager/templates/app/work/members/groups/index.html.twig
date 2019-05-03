@@ -6,11 +6,14 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.members') }}">Members</a></li>
         <li class="breadcrumb-item active">Groups</li>
     </ol>
 {% endblock %}
 
 {% block body %}
+
+    {{ include('app/work/members/groups/_tabs.html.twig') }}
 
     <div class="controls">
         <a href="{{ path('work.members.groups.create') }}" class="btn btn-success">Add Group</a>

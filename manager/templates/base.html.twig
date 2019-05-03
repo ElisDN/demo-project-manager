@@ -48,11 +48,6 @@
                 <li class="nav-title">Work</li>
                 {% if is_granted('ROLE_WORK_MANAGE_MEMBERS') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('work.members.groups') }}">
-                            <i class="nav-icon icon-people"></i> Groups
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('work.members') }}">
                             <i class="nav-icon icon-people"></i> Members
                         </a>
