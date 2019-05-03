@@ -52,6 +52,11 @@
                             <i class="nav-icon icon-people"></i> Groups
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('work.members') }}">
+                            <i class="nav-icon icon-people"></i> Members
+                        </a>
+                    </li>
                 {% endif %}
                 <li class="nav-title">Control</li>
                 {% if is_granted('ROLE_MANAGE_USERS') %}
