@@ -21,6 +21,7 @@ doctrine:
             user_user_id: 'App\Model\User\Entity\User\IdType'
             user_user_email: 'App\Model\User\Entity\User\EmailType'
             user_user_role: 'App\Model\User\Entity\User\RoleType'
+            work_members_group_id: 'App\Model\Work\Entity\Members\Group\IdType'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -32,3 +33,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Model/User/Entity'
                 prefix: 'App\Model\User\Entity'
                 alias: User
+            Work:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Model/Work/Entity'
+                prefix: 'App\Model\Work\Entity'
+                alias: Work
