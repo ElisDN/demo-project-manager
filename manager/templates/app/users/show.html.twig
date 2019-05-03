@@ -13,8 +13,8 @@
 {% block body %}
 
     <div class="controls">
-        <a href="{{ path('users.edit', {'id': user.id}) }}" class="btn btn-primary">Edit</a>
         {% if user.id.value != app.user.id %}
+            <a href="{{ path('users.edit', {'id': user.id}) }}" class="btn btn-primary">Edit</a>
             <a href="{{ path('users.role', {'id': user.id}) }}" class="btn btn-primary">Change Role</a>
         {% endif %}
         {% if user.wait %}
