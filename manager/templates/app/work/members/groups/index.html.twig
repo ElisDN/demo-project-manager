@@ -29,7 +29,13 @@
                 {% set token = csrf_token('delete') %}
                 {% for group in groups %}
                     <tr>
-                        <td>{{ group.name }}</td>
+                        <td>
+                            {% if group.members %}
+                                <a href="{{ path('work.members', {'form': {'group': group.id}}) }}">{{ group.name }}</a>
+                            {% else %}
+                                {{ group.name }}
+                            {% endif %}
+                        </td>
                         <td>{{ group.members }}</td>
                         <td>
                             <div class="d-flex flex-row">
