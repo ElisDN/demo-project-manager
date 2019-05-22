@@ -3,6 +3,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.2.0",
+        "ext-PDO": "^7.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "finesse/swiftmailer-defaults-plugin": "^2.0",
