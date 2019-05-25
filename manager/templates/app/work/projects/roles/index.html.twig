@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Roles{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
+        <li class="breadcrumb-item active">Roles</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    <div class="controls">
+        <a href="{{ path('work.projects.roles.create') }}" class="btn btn-success">Add Role</a>
+    </div>
+
+    <div class="box">
+        <div style="overflow: auto">
+            <table class="table table-bordered table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        {% for role in roles %}
+                            <th style="text-align: center">
+                                <a href="{{ path('work.projects.roles.show', {'id': role.id}) }}">{{ role.name }}</a>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for permission in permissions %}
+                        <tr>
+                            <td>{{ permission|trans({}, 'work_permissions') }}</td>
+                            {% for role in roles %}
+                                <td style="text-align: center">
+                                    {% if permission in role.permissions %}
+                                        <span class="fa fa-check"></span>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
