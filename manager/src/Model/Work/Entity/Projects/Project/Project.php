@@ -123,6 +123,16 @@ class Project
         throw new \DomainException('Department is not found.');
     }
 
+    public function hasMember(MemberId $id): bool
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForMember($id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @param Member $member
      * @param DepartmentId[] $departmentIds
@@ -166,6 +176,16 @@ class Project
             }
         }
         throw new \DomainException('Member is not found.');
+    }
+
+    public function isMemberGranted(MemberId $id, string $permission): bool
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForMember($id)) {
+                return $membership->isGranted($permission);
+            }
+        }
+        return false;
     }
 
     public function isArchived(): bool
