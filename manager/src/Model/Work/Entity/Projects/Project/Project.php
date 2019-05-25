@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Work\Entity\Projects\Project;
 
+use App\Model\Work\Entity\Members\Member\Id as MemberId;
+use App\Model\Work\Entity\Members\Member\Member;
 use App\Model\Work\Entity\Projects\Project\Department\Department;
 use App\Model\Work\Entity\Projects\Project\Department\Id as DepartmentId;
+use App\Model\Work\Entity\Projects\Role\Role;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -45,6 +48,11 @@ class Project
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $departments;
+    /**
+     * @var ArrayCollection|Membership[]
+     * @ORM\OneToMany(targetEntity="Membership", mappedBy="project", orphanRemoval=true, cascade={"all"})
+     */
+    private $memberships;
 
     public function __construct(Id $id, string $name, int $sort)
     {
@@ -53,6 +61,7 @@ class Project
         $this->sort = $sort;
         $this->status = Status::active();
         $this->departments = new ArrayCollection();
+        $this->memberships = new ArrayCollection();
     }
 
     public function edit(string $name, int $sort): void
@@ -102,11 +111,61 @@ class Project
     {
         foreach ($this->departments as $department) {
             if ($department->getId()->isEqual($id)) {
+                foreach ($this->memberships as $membership) {
+                    if ($membership->isForDepartment($id)) {
+                        throw new \DomainException('Unable to remove department with members.');
+                    }
+                }
                 $this->departments->removeElement($department);
                 return;
             }
         }
         throw new \DomainException('Department is not found.');
+    }
+
+    /**
+     * @param Member $member
+     * @param DepartmentId[] $departmentIds
+     * @param Role[] $roles
+     * @throws \Exception
+     */
+    public function addMember(Member $member, array $departmentIds, array $roles): void
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForMember($member->getId())) {
+                throw new \DomainException('Member already exists.');
+            }
+        }
+        $departments = array_map([$this, 'getDepartment'], $departmentIds);
+        $this->memberships->add(new Membership($this, $member, $departments, $roles));
+    }
+
+    /**
+     * @param MemberId $member
+     * @param DepartmentId[] $departmentIds
+     * @param Role[] $roles
+     */
+    public function editMember(MemberId $member, array $departmentIds, array $roles): void
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForMember($member)) {
+                $membership->changeDepartments(array_map([$this, 'getDepartment'], $departmentIds));
+                $membership->changeRoles($roles);
+                return;
+            }
+        }
+        throw new \DomainException('Member is not found.');
+    }
+
+    public function removeMember(MemberId $member): void
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForMember($member)) {
+                $this->memberships->removeElement($membership);
+                return;
+            }
+        }
+        throw new \DomainException('Member is not found.');
     }
 
     public function isArchived(): bool
@@ -152,5 +211,10 @@ class Project
             }
         }
         throw new \DomainException('Department is not found.');
+    }
+
+    public function getMemberships()
+    {
+        return $this->memberships->toArray();
     }
 }
