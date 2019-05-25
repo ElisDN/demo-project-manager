@@ -28,6 +28,7 @@
                         {% for role in roles %}
                             <th style="text-align: center">
                                 <a href="{{ path('work.projects.roles.show', {'id': role.id}) }}">{{ role.name }}</a>
+                                ({{ role.memberships_count }})
                             </th>
                         {% endfor %}
                     </tr>
