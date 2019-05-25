@@ -48,6 +48,18 @@ class ProjectSettingsMenu
                 ])
                 ->setAttribute('class', 'nav-item')
                 ->setLinkAttribute('class', 'nav-link');
+
+            $menu
+                ->addChild('Members', [
+                    'route' => 'work.projects.project.settings.members',
+                    'routeParameters' => ['project_id' => $options['project_id']]
+                ])
+                ->setExtra('routes', [
+                    ['route' => 'work.projects.project.settings.members'],
+                    ['pattern' => '/^work.projects.project.settings.members\..+/']
+                ])
+                ->setAttribute('class', 'nav-item')
+                ->setLinkAttribute('class', 'nav-link');
         }
 
         return $menu;
