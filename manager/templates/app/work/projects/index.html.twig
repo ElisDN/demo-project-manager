@@ -12,6 +12,8 @@
 
 {% block body %}
 
+    {{ include('app/work/projects/_tabs.html.twig') }}
+
     <div class="controls">
         <a href="{{ path('work.projects.create') }}" class="btn btn-success">Add Project</a>
     </div>
