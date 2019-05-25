@@ -35,7 +35,11 @@ class ProjectsController extends AbstractController
      */
     public function index(Request $request, ProjectFetcher $fetcher): Response
     {
-        $filter = new Filter\Filter();
+        if ($this->isGranted('ROLE_WORK_MANAGE_PROJECTS')) {
+            $filter = Filter\Filter::all();
+        } else {
+            $filter = Filter\Filter::forMember($this->getUser()->getId());
+        }
 
         $form = $this->createForm(Filter\Form::class, $filter);
         $form->handleRequest($request);
