@@ -17,6 +17,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class MemberFixture extends Fixture implements DependentFixtureInterface
 {
+    public const REFERENCE_ADMIN = 'work_member_admin';
+
     public function load(ObjectManager $manager): void
     {
         /**
@@ -35,6 +37,7 @@ class MemberFixture extends Fixture implements DependentFixtureInterface
 
         $member = $this->createMember($admin, $staff);
         $manager->persist($member);
+        $this->setReference(self::REFERENCE_ADMIN, $member);
 
         $member = $this->createMember($user, $customers);
         $manager->persist($member);
