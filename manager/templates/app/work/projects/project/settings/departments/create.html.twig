@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.settings', {'project_id': project.id}) }}">Settings</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.settings.departments', {'project_id': project.id}) }}">Departments</a></li>
+        <li class="breadcrumb-item active">Create</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {% include 'app/work/projects/project/_tabs.html.twig' %}
+
+    <h2>Add Department</h2>
+
+    <div class="card">
+        <div class="card-body">
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+{% endblock %}

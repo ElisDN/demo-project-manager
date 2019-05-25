@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Departments{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.settings', {'project_id': project.id}) }}">Settings</a></li>
+        <li class="breadcrumb-item active">Departments</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {% include 'app/work/projects/project/_tabs.html.twig' %}
+
+    <div class="controls">
+        <a href="{{ path('work.projects.project.settings.departments.create', {'project_id': project.id}) }}" class="btn btn-success">Add Department</a>
+    </div>
+
+    <div class="box">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Department</th>
+                <th></th>
+            </tr>
+            <tbody>
+            {% set token = csrf_token('delete') %}
+            {% for department in departments %}
+                <tr>
+                    <td>{{ department.name }}</td>
+                    <td>
+                        <div class="d-flex flex-row">
+                            <a href="{{ path('work.projects.project.settings.departments.edit', {'project_id': project.id, 'id': department.id}) }}" class="btn btn-sm btn-primary mr-1"><span class="fa fa-pencil"></span></a>
+                            <form action="{{ path('work.projects.project.settings.departments.delete', {'project_id': project.id, 'id': department.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                                <input type="hidden" name="token" value="{{ token }}" />
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="fa fa-times"></span></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
