@@ -22,6 +22,11 @@ class Id
         return new self(Uuid::uuid4()->toString());
     }
 
+    public function isEqual(self $other): bool
+    {
+        return $this->getValue() === $other->getValue();
+    }
+
     public function getValue(): string
     {
         return $this->value;
