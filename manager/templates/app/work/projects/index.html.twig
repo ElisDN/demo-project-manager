@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item active">Projects</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    <div class="controls">
+        <a href="{{ path('work.projects.create') }}" class="btn btn-success">Add Project</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-2">{{ form_widget(form.name) }}</div>
+                <div class="col-md-2">{{ form_widget(form.status) }}</div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="{{ path('work.projects') }}" class="btn btn-outline-secondary">Reset</a>
+                </div>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+    <div class="box">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'Name', 'name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Status', 'status') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for project in pagination %}
+                <tr>
+                    <td><a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></td>
+                    <td>{{ project_status(project.status) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+{% endblock %}

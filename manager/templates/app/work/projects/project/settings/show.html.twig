@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
+        <li class="breadcrumb-item active">Settings</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {% include 'app/work/projects/project/_tabs.html.twig' %}
+
+    <div class="controls">
+        <a href="{{ path('work.projects.project.settings.edit', {'project_id': project.id}) }}" class="btn btn-primary">Edit</a>
+        {% if project.active and project.id.value != app.user.id %}
+            <form action="{{ path('work.projects.project.settings.archive', {'project_id': project.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                <input type="hidden" name="token" value="{{ csrf_token('archive') }}" />
+                <button type="submit" class="btn btn-danger">Archive</button>
+            </form>
+        {% endif %}
+        {% if project.archived %}
+            <form action="{{ path('work.projects.project.settings.reinstate', {'project_id': project.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                <input type="hidden" name="token" value="{{ csrf_token('reinstate') }}" />
+                <button type="submit" class="btn btn-success">Reinstate</button>
+            </form>
+        {% endif %}
+        <form action="{{ path('work.projects.project.settings.delete', {'project_id': project.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+            <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+
+    <div class="box">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ project.name }}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ project_status(project.status.name) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

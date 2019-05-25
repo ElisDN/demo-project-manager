@@ -56,8 +56,10 @@ services:
         tags: ['twig.extension']
 
     App\Menu\SidebarMenu:
-        tags:
-            - { name: knp_menu.menu_builder, method: build, alias: sidebar }
+        tags: [{ name: knp_menu.menu_builder, method: build, alias: sidebar }]
+
+    App\Menu\Work\ProjectMenu:
+        tags: [{ name: knp_menu.menu_builder, method: build, alias: work_project }]
 
     Symfony\Component\HttpFoundation\Session\Session:
         alias: Symfony\Component\HttpFoundation\Session\SessionInterface
