@@ -28,6 +28,7 @@
             <thead>
             <tr>
                 <th>Department</th>
+                <th>Members</th>
                 <th></th>
             </tr>
             <tbody>
@@ -35,6 +36,7 @@
             {% for department in departments %}
                 <tr>
                     <td>{{ department.name }}</td>
+                    <td>{{ department.members_count }}</td>
                     <td>
                         <div class="d-flex flex-row">
                             <a href="{{ path('work.projects.project.settings.departments.edit', {'project_id': project.id, 'id': department.id}) }}" class="btn btn-sm btn-primary mr-1"><span class="fa fa-pencil"></span></a>
