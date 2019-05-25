@@ -17,6 +17,8 @@
 
     {% include 'app/work/projects/project/_tabs.html.twig' %}
 
+    {% include 'app/work/projects/project/settings/_tabs.html.twig' %}
+
     <div class="controls">
         <a href="{{ path('work.projects.project.settings.departments.create', {'project_id': project.id}) }}" class="btn btn-success">Add Department</a>
     </div>
