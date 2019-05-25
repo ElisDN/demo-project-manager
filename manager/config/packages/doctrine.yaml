@@ -27,6 +27,7 @@ doctrine:
             work_members_member_status: 'App\Model\Work\Entity\Members\Member\StatusType'
             work_projects_project_id: 'App\Model\Work\Entity\Projects\Project\IdType'
             work_projects_project_status: 'App\Model\Work\Entity\Projects\Project\StatusType'
+            work_projects_project_department_id: 'App\Model\Work\Entity\Projects\Project\Department\IdType'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
