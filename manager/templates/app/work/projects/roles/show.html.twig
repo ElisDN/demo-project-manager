@@ -14,6 +14,8 @@
 
 {% block body %}
 
+    {{ include('app/work/projects/_tabs.html.twig') }}
+
     <div class="controls">
         <a href="{{ path('work.projects.roles.edit', {'id': role.id}) }}" class="btn btn-primary">Edit</a>
         <form action="{{ path('work.projects.roles.delete', {'id': role.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
