@@ -6,6 +6,7 @@
         "ext-PDO": "^7.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "^1.6",
         "finesse/swiftmailer-defaults-plugin": "^2.0",
         "knplabs/knp-menu-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^3.0",
