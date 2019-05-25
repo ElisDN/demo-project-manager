@@ -61,5 +61,8 @@ services:
     App\Menu\Work\ProjectMenu:
         tags: [{ name: knp_menu.menu_builder, method: build, alias: work_project }]
 
+    App\Menu\Work\ProjectSettingsMenu:
+        tags: [{ name: knp_menu.menu_builder, method: build, alias: work_project_settings }]
+
     Symfony\Component\HttpFoundation\Session\Session:
         alias: Symfony\Component\HttpFoundation\Session\SessionInterface
