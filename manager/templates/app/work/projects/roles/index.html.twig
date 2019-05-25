@@ -13,6 +13,8 @@
 
 {% block body %}
 
+    {{ include('app/work/projects/_tabs.html.twig') }}
+
     <div class="controls">
         <a href="{{ path('work.projects.roles.create') }}" class="btn btn-success">Add Role</a>
     </div>
