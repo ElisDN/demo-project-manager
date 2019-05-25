@@ -16,6 +16,20 @@ class RoleFetcher
         $this->connection = $connection;
     }
 
+    public function allList(): array
+    {
+        $stmt = $this->connection->createQueryBuilder()
+            ->select(
+                'id',
+                'name'
+            )
+            ->from('work_projects_roles')
+            ->orderBy('name')
+            ->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
+    }
+
     public function all(): array
     {
         $stmt = $this->connection->createQueryBuilder()
