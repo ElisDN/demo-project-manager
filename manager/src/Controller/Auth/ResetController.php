@@ -6,7 +6,7 @@ namespace App\Controller\Auth;
 
 use App\Model\User\UseCase\Reset;
 use App\ReadModel\User\UserFetcher;
-use Psr\Log\LoggerInterface;
+use App\Controller\ErrorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ResetController extends AbstractController
 {
-    private $logger;
+    private $errors;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(ErrorHandler $errors)
     {
-        $this->logger = $logger;
+        $this->errors = $errors;
     }
 
     /**
@@ -40,7 +40,7 @@ class ResetController extends AbstractController
                 $this->addFlash('success', 'Check your email.');
                 return $this->redirectToRoute('home');
             } catch (\DomainException $e) {
-                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->errors->handle($e);
                 $this->addFlash('error', $e->getMessage());
             }
         }
@@ -76,7 +76,7 @@ class ResetController extends AbstractController
                 $this->addFlash('success', 'Password is successfully changed.');
                 return $this->redirectToRoute('home');
             } catch (\DomainException $e) {
-                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->errors->handle($e);
                 $this->addFlash('error', $e->getMessage());
             }
         }
