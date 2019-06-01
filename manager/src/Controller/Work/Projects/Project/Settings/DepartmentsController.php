@@ -11,7 +11,7 @@ use App\Model\Work\UseCase\Projects\Project\Department\Create;
 use App\Model\Work\UseCase\Projects\Project\Department\Edit;
 use App\Model\Work\UseCase\Projects\Project\Department\Remove;
 use App\ReadModel\Work\Projects\Project\DepartmentFetcher;
-use App\Security\Voter\Work\ProjectAccess;
+use App\Security\Voter\Work\Projects\ProjectAccess;
 use App\Controller\ErrorHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
