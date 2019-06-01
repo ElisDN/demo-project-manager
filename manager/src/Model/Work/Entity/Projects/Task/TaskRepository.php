@@ -20,6 +20,15 @@ class TaskRepository
         $this->em = $em;
     }
 
+    /**
+     * @param Id $id
+     * @return Task[]
+     */
+    public function allByParent(Id $id): array
+    {
+        return $this->repo->findBy(['parent' => $id->getValue()]);
+    }
+
     public function get(Id $id): Task
     {
         /** @var Task $task */
