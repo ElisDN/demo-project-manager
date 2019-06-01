@@ -58,6 +58,17 @@ class Task
         $this->content = $content;
     }
 
+    public function start(\DateTimeImmutable $date): void
+    {
+        if (!$this->isNew()) {
+            throw new \DomainException('Task is already started.');
+        }
+        if (!$this->executors->count()) {
+            throw new \DomainException('Task does not contain executors.');
+        }
+        $this->changeStatus(Status::working(), $date);
+    }
+
     public function setChildOf(?Task $parent): void
     {
         if ($parent) {
@@ -165,6 +176,10 @@ class Task
         return $this->status->isNew();
     }
 
+    public function isWorking(): bool
+    {
+        return $this->status->isWorking();
+    }
 
     public function getId(): Id
     {
