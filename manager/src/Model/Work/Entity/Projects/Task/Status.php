@@ -60,4 +60,9 @@ class Status
     {
         return $this->name === self::NEW;
     }
+
+    public function isWorking(): bool
+    {
+        return $this->name === self::WORKING;
+    }
 }
