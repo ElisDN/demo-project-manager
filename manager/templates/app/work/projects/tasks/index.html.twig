@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
+        {% if project %}
+            <li class="breadcrumb-item"><a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active">Tasks</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {% if project %}
+        {% include 'app/work/projects/project/_tabs.html.twig' %}
+    {% else %}
+        {% include 'app/work/_tabs.html.twig' %}
+    {% endif %}
+
+    {% if project %}
+        <div class="controls">
+            <a href="{{ path('work.projects.project.tasks.create', {'project_id': project.id}) }}" class="btn btn-success">Add Tasks</a>
+        </div>
+    {% endif %}
+
+    <div class="card">
+        <div class="card-body">
+
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-2">{{ form_widget(form.name) }}</div>
+                <div class="col-md-2">{{ form_widget(form.type) }}</div>
+                <div class="col-md-2">{{ form_widget(form.status) }}</div>
+                <div class="col-md-2">{{ form_widget(form.priority) }}</div>
+                <div class="col-md-2">{{ form_widget(form.executor) }}</div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="{{ path('work.projects.tasks') }}" class="btn btn-default">Clear</a>
+                </div>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+    <div class="box">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'ID', 't.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Date', 't.date') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Author', 'author_name') }}</th>
+                {% if not project %}
+                    <th>{{ knp_pagination_sortable(pagination, 'Project', 'project_name') }}</th>
+                {% endif %}
+                <th>{{ knp_pagination_sortable(pagination, 'Name', 'name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Type', 't.type') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, '<span class="fa fa-fire"></span>', 't.priority', {'encode': false}) }}</th>
+                <th>Executors</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Plan', 't.plan_date') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Status', 't.status') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Ready', 't.progress') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in pagination %}
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.date|date('Y-m-d H:i') }}</td>
+                    <td>{{ task.author_name }}</td>
+                    {% if not project %}
+                        <td>
+                            <a href="{{ path('work.projects.project.show', {'id': task.project_id}) }}">{{ task.project_name }}</a>
+                        </td>
+                    {% endif %}
+                    <td>
+                        {% if task.parent %}
+                            <span class="fa fa-angle-double-right"></span>
+                        {% endif %}
+                        <a href="{{ path('work.projects.tasks.show', {'id': task.id}) }}">{{ task.name }}</a>
+                    </td>
+                    <td>
+                        {% if task.type != 'none' %}
+                            {{ work_projects_task_type(task.type) }}
+                        {% endif %}
+                    </td>
+                    <td>{{ work_projects_task_priority(task.priority) }}</td>
+                    <td>
+                        {% for executor in task.executors %}
+                            <span class="badge badge-default" style="background: #eee">{{ executor.name }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>{{ task.plan_date ? task.plan_date|date('Y-m-d') : '' }}</td>
+                    <td>{{ work_projects_task_status(task.status) }}</td>
+                    <td>
+                        {% if task.progress %}
+                            {{ work_projects_task_progress(task.progress) }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,264 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ task.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.tasks', {'project_id': project.id}) }}">Tasks</a>
+        </li>
+        <li class="breadcrumb-item active">{{ task.name }}</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="mt-0 mb-3 font-xl">
+        {% if task.parent %}
+            <a href="{{ path('work.projects.tasks.show', {'id': task.parent.id}) }}">{{ task.parent.name }}</a> /
+        {% endif %}
+        {{ task.name }}
+    </h1>
+
+    <div class="controls">
+
+        {% if task.hasExecutor(member.id) %}
+            {% if task.isNew() %}
+                <form action="{{ path('work.projects.tasks.start', {'id': task.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                    <input type="hidden" name="token" value="{{ csrf_token('start') }}" />
+                    <button type="submit" class="btn btn-success">Start</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <form action="{{ path('work.projects.tasks.take', {'id': task.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                <input type="hidden" name="token" value="{{ csrf_token('take') }}" />
+                <button type="submit" class="btn btn-success">Take</button>
+            </form>
+            {% if task.isNew() %}
+                <form action="{{ path('work.projects.tasks.take_and_start', {'id': task.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                    <input type="hidden" name="token" value="{{ csrf_token('take-and-start') }}" />
+                    <button type="submit" class="btn btn-success">Take & Start</button>
+                </form>
+            {% endif %}
+        {% endif %}
+        <a href="{{ path('work.projects.tasks.assign', {'id': task.id}) }}" class="btn btn-primary">Assign Executors</a>
+        <a href="{{ path('work.projects.project.tasks.create', {'project_id': project.id}) }}?parent={{ task.id }}" class="btn btn-primary">Add SubTasks</a>
+        <a href="{{ path('work.projects.tasks.edit', {'id': task.id}) }}" class="btn btn-primary">Edit</a>
+        <div class="btn-group">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More&hellip;</button>
+            <div class="dropdown-menu" x-placement="bottom-start">
+                <a class="dropdown-item" href="{{ path('work.projects.tasks.move', {'id': task.id}) }}">Move To Project&hellip;</a>
+                <a class="dropdown-item" href="{{ path('work.projects.tasks.child', {'id': task.id}) }}">Set As Child Of&hellip;</a>
+                <form class="dropdown-item" action="{{ path('work.projects.tasks.delete', {'id': task.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                    <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                    <button type="submit" class="btn" style="padding: 0">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if children %}
+        <div class="card">
+            <div class="card-header">
+                <a href="{{ path('work.projects.project.tasks.create', {'project_id': project.id}) }}?parent={{ task.id }}" class="btn btn-sm btn-default py-0 pull-right"><span class="fa fa-plus"></span></a>
+                Subtasks
+            </div>
+            <table class="table table-bordered table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Project</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th><span class="fa fa-fire"></span></th>
+                        <th>Executor</th>
+                        <th>Status</th>
+                        <th>Ready</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for child in children %}
+                        <tr>
+                            <td>{{ child.date|date('Y-m-d H:i') }}</td>
+                            <td>
+                                <a href="{{ path('work.projects.project.show', {'id': child.project_id}) }}">{{ child.project_name }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('work.projects.tasks.show', {'id': child.id}) }}">{{ child.name }}</a>
+                            </td>
+                            <td>
+                                {% if child.type != 'none' %}
+                                    {{ work_projects_task_type(child.type) }}
+                                {% endif %}
+                            </td>
+                            <td>{{ work_projects_task_priority(child.priority) }}</td>
+                            <td>
+                                {% for executor in child.executors %}
+                                    <span class="badge badge-default" style="background: #eee">{{ executor.name }}</span>
+                                {% endfor %}
+                            </td>
+                            <td>{{ work_projects_task_status(child.status) }}</td>
+                            <td>
+                                {% if child.progress %}
+                                    {{ work_projects_task_progress(child.progress) }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Task</div>
+                <table class="table table-bordered mb-0">
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td colspan="3">{{ task.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Create Date</th>
+                            <td>{{ task.date|date('Y-m-d H:i:s') }}</td>
+                            <th>Plan Date</th>
+                            <td>
+                                {{ task.planDate ? task.planDate|date('Y-m-d') : '' }}
+
+                                <div class="controls pull-right" style="margin-bottom: 0">
+                                    <a href="{{ path('work.projects.tasks.plan', {'project_id': project.id, 'id': task.id}) }}" class="btn btn-sm py-0">
+                                        <span class="fa fa-pencil"></span>
+                                    </a>
+                                    {% if task.planDate %}
+                                        <form action="{{ path('work.projects.tasks.plan.remove', {'project_id': project.id, 'id': task.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                                            <input type="hidden" name="token" value="{{ csrf_token('remove-plan') }}" />
+                                            <button type="submit" class="btn btn-sm py-0">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Type</th>
+                            <td>
+                                {{ form_start(typeForm) }}
+                                <div class="row">
+                                    <div class="col-sm-8">{{ form_widget(typeForm.type, {'attr': {'class': 'input-sm'}}) }}</div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" class="btn btn-sm btn-default pull-right invisible">
+                                            <span class="fa fa-check"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                {{ form_end(typeForm) }}
+                            </td>
+                            <th>Status</th>
+                            <td>
+                                {{ form_start(statusForm) }}
+                                <div class="row">
+                                    <div class="col-sm-8">{{ form_widget(statusForm.status, {'attr': {'class': 'input-sm'}}) }}</div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" class="btn btn-sm btn-default pull-right invisible">
+                                            <span class="fa fa-check"></span></button>
+                                    </div>
+                                </div>
+                                {{ form_end(statusForm) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Priority</th>
+                            <td>
+                                {{ form_start(priorityForm) }}
+                                <div class="row">
+                                    <div class="col-sm-8">{{ form_widget(priorityForm.priority, {'attr': {'class': 'input-sm'}}) }}</div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" class="btn btn-sm btn-default pull-right invisible">
+                                            <span class="fa fa-check"></span></button>
+                                    </div>
+                                </div>
+                                {{ form_end(priorityForm) }}
+                            </td>
+                            <th>Progress</th>
+                            <td>
+                                {{ form_start(progressForm) }}
+                                <div class="row">
+                                    <div class="col-sm-8">{{ form_widget(progressForm.progress, {'attr': {'class': 'input-sm'}}) }}</div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" class="btn btn-sm btn-default pull-right invisible">
+                                            <span class="fa fa-check"></span></button>
+                                    </div>
+                                </div>
+                                {{ form_end(progressForm) }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {% if task.content %}
+                <div class="card">
+                    <div class="card-body pb-0">
+                        <p>{{ task.content|nl2br }}</p>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Author</div>
+                <table class="table mb-0">
+                    <tbody>
+                        <tr>
+                            <td style="width: 24px; box-sizing: content-box">
+                                <img src="{{ gravatar(task.author.email.value, 24) }}" class="img-circle" width="24" height="24" alt="" />
+                            </td>
+                            <td>
+                                <a href="{{ path('work.members.show', {'id': task.author.id}) }}">{{ task.author.name.full }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ path('work.projects.tasks.assign', {'project_id': project.id, 'id': task.id}) }}" class="btn btn-sm btn-default py-0 pull-right"><span class="fa fa-plus"></span></a>
+                    Executors
+                </div>
+                {% if task.executors %}
+                    <table class="table mb-0">
+                        <tbody>
+                            {% for executor in task.executors %}
+                                <tr>
+                                    <td style="width: 24px; box-sizing: content-box">
+                                        <img src="{{ gravatar(executor.email.value, 24) }}" class="img-circle" width="24" height="24" alt="" />
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('work.members.show', {'id': executor.id}) }}">{{ executor.name.full }}</a>
+                                    </td>
+                                    <td style="width: 22px">
+                                        <form action="{{ path('work.projects.tasks.revoke', {'project_id': project.id, 'id': task.id, 'member_id': executor.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                                            <input type="hidden" name="token" value="{{ csrf_token('revoke') }}" />
+                                            <button type="submit" class="btn btn-sm btn-default">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
