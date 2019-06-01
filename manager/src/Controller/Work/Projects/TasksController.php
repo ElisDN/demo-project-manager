@@ -81,6 +81,70 @@ class TasksController extends AbstractController
     }
 
     /**
+     * @Route("/me", name=".me")
+     * @ParamConverter("project", options={"id" = "project_id"})
+     * @param Request $request
+     * @param TaskFetcher $tasks
+     * @return Response
+     */
+    public function me(Request $request, TaskFetcher $tasks): Response
+    {
+        $filter = Filter\Filter::all();
+
+        $form = $this->createForm(Filter\Form::class, $filter, [
+            'action' => $this->generateUrl('work.projects.tasks'),
+        ]);
+
+        $form->handleRequest($request);
+
+        $pagination = $tasks->all(
+            $filter->forExecutor($this->getUser()->getId()),
+            $request->query->getInt('page', 1),
+            self::PER_PAGE,
+            $request->query->get('sort', 't.id'),
+            $request->query->get('direction', 'desc')
+        );
+
+        return $this->render('app/work/projects/tasks/index.html.twig', [
+            'project' => null,
+            'pagination' => $pagination,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/own", name=".own")
+     * @ParamConverter("project", options={"id" = "project_id"})
+     * @param Request $request
+     * @param TaskFetcher $tasks
+     * @return Response
+     */
+    public function own(Request $request, TaskFetcher $tasks): Response
+    {
+        $filter = Filter\Filter::all();
+
+        $form = $this->createForm(Filter\Form::class, $filter, [
+             'action' => $this->generateUrl('work.projects.tasks'),
+        ]);
+
+        $form->handleRequest($request);
+
+        $pagination = $tasks->all(
+            $filter->forAuthor($this->getUser()->getId()),
+            $request->query->getInt('page', 1),
+            self::PER_PAGE,
+            $request->query->get('sort', 't.id'),
+            $request->query->get('direction', 'desc')
+        );
+
+        return $this->render('app/work/projects/tasks/index.html.twig', [
+            'project' => null,
+            'pagination' => $pagination,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/{id}/edit", name=".edit")
      * @param Task $task
      * @param Request $request
