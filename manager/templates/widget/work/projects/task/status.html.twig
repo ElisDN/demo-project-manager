@@ -1,0 +1,15 @@
+{% if status == 'new' %}
+    <span class="badge badge-secondary">New</span>
+{% elseif status == 'working' %}
+    <span class="badge badge-primary">Working</span>
+{% elseif status == 'help' %}
+    <span class="badge badge-warning">Help</span>
+{% elseif status == 'checking' %}
+    <span class="badge badge-danger">Checking</span>
+{% elseif status == 'rejected' %}
+    <span class="badge badge-info">Rejected</span>
+{% elseif status == 'done' %}
+    <span class="badge badge-success">Done</span>
+{% elseif status == 'archived' %}
+    <span class="badge badge-dark">Archived</span>
+{% endif %}

@@ -1,0 +1,19 @@
+{% if priority == 1 %}
+    {% set color = '#888' %}
+{% elseif priority == 2 %}
+    {% set color = '#00c0ef' %}
+{% elseif priority == 3 %}
+    {% set color = '#f39c12' %}
+{% elseif priority == 4 %}
+    {% set color = '#dd4b39' %}
+{% endif %}
+
+<span style="font-size: 60%; white-space: nowrap">
+    {% for i in 1..4 %}
+        {% if i <= priority %}
+            <span class="fa fa-square" style="color: {{ color }}"></span>
+        {% else %}
+            <span class="fa fa-square" style="color: #eee" ></span>
+        {% endif %}
+    {% endfor %}
+</span>
