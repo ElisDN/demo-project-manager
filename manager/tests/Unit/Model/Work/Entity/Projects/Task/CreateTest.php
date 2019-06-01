@@ -43,5 +43,7 @@ class CreateTest extends TestCase
 
         self::assertNull($task->getParent());
         self::assertNull($task->getPlanDate());
+
+        self::assertTrue($task->isNew());
     }
 }
