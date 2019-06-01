@@ -1,0 +1,7 @@
+{% if progress %}
+    <div class="progress progress-sm">
+        <div class="progress-bar{% if progress == 100 %} bg-success{% endif %}" style="width: {{ progress }}%">
+            <span class="sr-only">{{ progress }}%</span>
+        </div>
+    </div>
+{% endif %}
