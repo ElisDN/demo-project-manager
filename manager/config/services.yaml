@@ -59,13 +59,13 @@ services:
     App\Menu\SidebarMenu:
         tags: [{ name: knp_menu.menu_builder, method: build, alias: sidebar }]
 
-    App\Menu\Work\ProjectsMenu:
-        tags: [{ name: knp_menu.menu_builder, method: build, alias: work_projects }]
+    App\Menu\Work\MainMenu:
+        tags: [{ name: knp_menu.menu_builder, method: build, alias: work_main }]
 
-    App\Menu\Work\ProjectMenu:
+    App\Menu\Work\Projects\ProjectMenu:
         tags: [{ name: knp_menu.menu_builder, method: build, alias: work_project }]
 
-    App\Menu\Work\ProjectSettingsMenu:
+    App\Menu\Work\Projects\SettingsMenu:
         tags: [{ name: knp_menu.menu_builder, method: build, alias: work_project_settings }]
 
     Symfony\Component\HttpFoundation\Session\Session:
