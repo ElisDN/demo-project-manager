@@ -28,6 +28,20 @@ class ProjectFetcher
             ->execute()->fetch()['m'];
     }
 
+    public function allList(): array
+    {
+        $stmt = $this->connection->createQueryBuilder()
+            ->select(
+                'id',
+                'name'
+            )
+            ->from('work_projects_projects')
+            ->orderBy('sort')
+            ->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
+    }
+
     /**
      * @param Filter $filter
      * @param int $page
