@@ -3,3 +3,4 @@ exercise_html_purifier:
     default:
         # the charset used by the original contents
         Core.Encoding: 'UTF-8'
+        AutoFormat.Linkify: true
