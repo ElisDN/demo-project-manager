@@ -66,6 +66,17 @@ main {
     }
 }
 
+pre {
+    padding: 9.5px;
+    margin-bottom: 1rem;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f6f6f6;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+}
+
 .footer {
     background-color: #f5f5f5;
 
