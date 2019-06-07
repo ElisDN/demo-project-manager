@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f84cb57eb4fafd4417696ac6b92bef4",
+    "content-hash": "9e1cce8b37fe920b0579f75af58ecbac",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -1315,6 +1315,110 @@
                 "validator"
             ],
             "time": "2019-05-16T22:02:54+00:00"
+        },
+        {
+            "name": "exercise/htmlpurifier-bundle",
+            "version": "V2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Exercise/HTMLPurifierBundle.git",
+                "reference": "d39f309a9759a04669bc6aa21fbb03d2c5299446"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Exercise/HTMLPurifierBundle/zipball/d39f309a9759a04669bc6aa21fbb03d2c5299446",
+                "reference": "d39f309a9759a04669bc6aa21fbb03d2c5299446",
+                "shasum": ""
+            },
+            "require": {
+                "ezyang/htmlpurifier": "~4.0",
+                "php": "^5.5.9|>=7.0.8",
+                "symfony/config": "~3.3 || ~4.0",
+                "symfony/dependency-injection": "~3.4.1 || ^4.0.1",
+                "symfony/http-kernel": "~3.4.1 || ^4.0.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.2",
+                "symfony/form": "~3.4.1 || ^4.0.1",
+                "twig/twig": "^1.34.4 || ^2.4.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Exercise\\HTMLPurifierBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "contributors",
+                    "homepage": "https://github.com/Exercise/HTMLPurifierBundle/contributors"
+                }
+            ],
+            "description": "HTMLPurifier integration for your Symfony project",
+            "homepage": "https://github.com/Exercise/HTMLPurifierBundle",
+            "keywords": [
+                "Purifier",
+                "html",
+                "htmlpurifier",
+                "symfony"
+            ],
+            "time": "2019-02-21T01:33:48+00:00"
+        },
+        {
+            "name": "ezyang/htmlpurifier",
+            "version": "v4.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezyang/htmlpurifier.git",
+                "reference": "d85d39da4576a6934b72480be6978fb10c860021"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/d85d39da4576a6934b72480be6978fb10c860021",
+                "reference": "d85d39da4576a6934b72480be6978fb10c860021",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "HTMLPurifier": "library/"
+                },
+                "files": [
+                    "library/HTMLPurifier.composer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Edward Z. Yang",
+                    "email": "admin@htmlpurifier.org",
+                    "homepage": "http://ezyang.com"
+                }
+            ],
+            "description": "Standards compliant HTML filter written in PHP",
+            "homepage": "http://htmlpurifier.org/",
+            "keywords": [
+                "html"
+            ],
+            "time": "2018-02-23T01:58:20+00:00"
         },
         {
             "name": "fig/link-util",
