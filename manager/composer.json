@@ -8,6 +8,7 @@
         "ext-iconv": "*",
         "ext-json": "^1.6",
         "cebe/markdown": "^1.2",
+        "exercise/htmlpurifier-bundle": "^2.0",
         "finesse/swiftmailer-defaults-plugin": "^2.0",
         "knplabs/knp-menu-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "^3.0",
