@@ -39,8 +39,12 @@ class TaskFetcher
      * @param string $direction
      * @return PaginationInterface
      */
-    public function all(Filter $filter, int $page, int $size, string $sort, string $direction): PaginationInterface
+    public function all(Filter $filter, int $page, int $size, ?string $sort, ?string $direction): PaginationInterface
     {
+        if (!\in_array($sort, [null, 't.id', 't.date', 'author_name', 'project_name', 'name', 't.type', 't.plan_date', 't.progress', 't.priority', 't.status'], true)) {
+            throw new \UnexpectedValueException('Cannot sort by ' . $sort);
+        }
+
         $qb = $this->connection->createQueryBuilder()
             ->select(
                 't.id',
@@ -77,9 +81,18 @@ class TaskFetcher
             $qb->setParameter(':author', $filter->author);
         }
 
-        if ($filter->name) {
-            $qb->andWhere($qb->expr()->like('LOWER(t.name)', ':name'));
-            $qb->setParameter(':name', '%' . mb_strtolower($filter->name) . '%');
+        if ($filter->text) {
+            $vector = "(setweight(to_tsvector(t.name),'A') || setweight(to_tsvector(coalesce(t.content,'')), 'B'))";
+            $query = 'plainto_tsquery(:text)';
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->like('LOWER(CONCAT(t.name, \' \', coalesce(t.content, \'\')))', ':text'),
+                "$vector @@ $query"
+            ));
+            $qb->setParameter(':text', '%' . mb_strtolower($filter->text) . '%');
+            if (empty($sort)) {
+                $sort = "ts_rank($vector, $query)";
+                $direction = 'desc';
+            }
         }
 
         if ($filter->type) {
@@ -103,11 +116,7 @@ class TaskFetcher
             $qb->setParameter(':executor', $filter->executor);
         }
 
-        if (!\in_array($sort, ['t.id', 't.date', 'author_name', 'project_name', 'name', 't.type', 't.plan_date', 't.progress', 't.priority', 't.status'], true)) {
-            throw new \UnexpectedValueException('Cannot sort by ' . $sort);
-        }
-
-        $qb->orderBy($sort, $direction === 'desc' ? 'desc' : 'asc');
+        $qb->orderBy($sort ?: 't.id', $direction === 'desc' ? 'desc' : 'asc');
 
         /** @var SlidingPagination $pagination */
         $pagination = $this->paginator->paginate($qb, $page, $size);
