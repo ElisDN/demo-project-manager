@@ -16,6 +16,9 @@ services:
             REDIS_URL: tcp://manager-redis:6379?password=${MANAGER_REDIS_PASSWORD}
             MAILER_URL: null://localhost
             OAUTH_FACEBOOK_SECRET: ${MANAGER_OAUTH_FACEBOOK_SECRET}
+            STORAGE_FTP_HOST: ${STORAGE_FTP_HOST}
+            STORAGE_FTP_USERNAME: ${STORAGE_FTP_USERNAME}
+            STORAGE_FTP_PASSWORD: ${STORAGE_FTP_PASSWORD}
         depends_on:
             - manager-postgres
             - manager-redis
@@ -27,6 +30,9 @@ services:
             REDIS_URL: tcp://manager-redis:6379?password=${MANAGER_REDIS_PASSWORD}
             MAILER_URL: null://localhost
             OAUTH_FACEBOOK_SECRET: ${MANAGER_OAUTH_FACEBOOK_SECRET}
+            STORAGE_FTP_HOST: ${STORAGE_FTP_HOST}
+            STORAGE_FTP_USERNAME: ${STORAGE_FTP_USERNAME}
+            STORAGE_FTP_PASSWORD: ${STORAGE_FTP_PASSWORD}
         depends_on:
             - manager-postgres
             - manager-redis
