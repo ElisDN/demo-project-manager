@@ -13,6 +13,7 @@
         "knplabs/knp-menu-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "^3.0",
         "knpuniversity/oauth2-client-bundle": "^1.28",
+        "league/flysystem-bundle": "^1.1",
         "league/oauth2-facebook": "^2.0",
         "predis/predis": "^1.1",
         "ramsey/uuid": "^3.8",
