@@ -4,13 +4,22 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class HomeTest extends WebTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadFixtures([
+            AuthFixture::class,
+        ]);
+    }
+
     public function testGuest(): void
     {
-        $client = static::createClient();
+        $client = $this->makeClient();
         $client->request('GET', '/');
 
         $this->assertSame(302, $client->getResponse()->getStatusCode());
@@ -19,7 +28,7 @@ class HomeTest extends WebTestCase
 
     public function testUser(): void
     {
-        $client = static::createClient([], AuthFixture::userCredentials());
+        $client = $this->makeClient(false, AuthFixture::userCredentials());
         $crawler = $client->request('GET', '/');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
@@ -28,7 +37,7 @@ class HomeTest extends WebTestCase
 
     public function testAdmin(): void
     {
-        $client = static::createClient([], AuthFixture::adminCredentials());
+        $client = $this->makeClient(false, AuthFixture::userCredentials());
         $crawler = $client->request('GET', '/');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());

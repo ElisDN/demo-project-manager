@@ -162,6 +162,9 @@
     "league/oauth2-facebook": {
         "version": "2.0.1"
     },
+    "liip/functional-test-bundle": {
+        "version": "2.0.0-alpha15"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },

@@ -5,10 +5,20 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Users;
 
 use App\Tests\Functional\AuthFixture;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class CreateTest extends WebTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadFixtures([
+            AuthFixture::class,
+            UsersFixture::class,
+        ]);
+    }
+
     public function testGuest(): void
     {
         $client = static::createClient();
@@ -20,7 +30,7 @@ class CreateTest extends WebTestCase
 
     public function testUser(): void
     {
-        $client = static::createClient([], AuthFixture::userCredentials());
+        $client = $this->makeClient(false, AuthFixture::userCredentials());
         $client->request('GET', '/users/create');
 
         $this->assertSame(403, $client->getResponse()->getStatusCode());
@@ -28,7 +38,7 @@ class CreateTest extends WebTestCase
 
     public function testGet(): void
     {
-        $client = static::createClient([], AuthFixture::adminCredentials());
+        $client = $this->makeClient(false, AuthFixture::adminCredentials());
         $crawler = $client->request('GET', '/users/create');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
@@ -37,7 +47,7 @@ class CreateTest extends WebTestCase
 
     public function testCreate(): void
     {
-        $client = static::createClient([], AuthFixture::adminCredentials());
+        $client = $this->makeClient(false, AuthFixture::adminCredentials());
         $client->request('GET', '/users/create');
 
         $client->submitForm('Create', [
@@ -58,7 +68,7 @@ class CreateTest extends WebTestCase
 
     public function testNotValid(): void
     {
-        $client = static::createClient([], AuthFixture::adminCredentials());
+        $client = $this->makeClient(false, AuthFixture::adminCredentials());
         $client->request('GET', '/users/create');
 
         $crawler = $client->submitForm('Create', [
@@ -81,7 +91,7 @@ class CreateTest extends WebTestCase
 
     public function testExists(): void
     {
-        $client = static::createClient([], AuthFixture::adminCredentials());
+        $client = $this->makeClient(false, AuthFixture::adminCredentials());
         $client->request('GET', '/users/create');
 
         $crawler = $client->submitForm('Create', [
