@@ -202,6 +202,35 @@
                 </table>
             </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ path('work.projects.tasks.files', {'id': task.id}) }}" class="btn btn-sm btn-default py-0 pull-right"><span class="fa fa-plus"></span></a>
+                    Files
+                </div>
+                <table class="table mb-0">
+                    <tbody>
+                        {% for file in task.files %}
+                            <tr>
+                                <td><a href="{{ storage_path(file.info.path ~ '/' ~ file.info.name) }}" target="_blank">{{ file.info.name }}</a></td>
+                                <td>{{ (file.info.size / 1024)|number_format(2, '.', ',') }} KB</td>
+                                <td>{{ file.date|date('Y-m-d H:i:s') }}</td>
+                                <td>
+                                    <a href="{{ path('work.members.show', {'id': file.member.id}) }}">{{ file.member.name.full }}</a>
+                                </td>
+                                <td style="width: 27px; box-sizing: content-box">
+                                    <form action="{{ path('work.projects.tasks.files.delete', {'id': task.id, 'file_id': file.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                                        <input type="hidden" name="token" value="{{ csrf_token('delete-file') }}" />
+                                        <button type="submit" class="btn btn-sm btn-default">
+                                            <span class="fa fa-times"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
             {% if task.content %}
                 <div class="card">
                     <div class="card-body pb-0">
