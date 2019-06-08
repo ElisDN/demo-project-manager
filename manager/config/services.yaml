@@ -83,3 +83,6 @@ services:
 
     App\Twig\Extension\Work\Processor\ProcessorExtension:
         arguments: [!tagged app.twig.work_processor.driver]
+
+    App\Service\Uploader\FileUploader:
+        arguments: ['@default.storage', '%env(STORAGE_BASE_URL)%']
