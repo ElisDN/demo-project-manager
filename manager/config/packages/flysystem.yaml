@@ -1,0 +1,14 @@
+# Read the documentation at https://github.com/thephpleague/flysystem-bundle/blob/master/docs/1-getting-started.md
+flysystem:
+    storages:
+        default.storage:
+            adapter: 'ftp'
+            options:
+                host: '%env(STORAGE_FTP_HOST)%'
+                username: '%env(STORAGE_FTP_USERNAME)%'
+                password: '%env(STORAGE_FTP_PASSWORD)%'
+                port: 21
+                passive: false
+                ssl: false
+                timeout: 30
+                ignore_passive_address: ~
