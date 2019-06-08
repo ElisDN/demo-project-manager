@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Container\Work\ProcessorCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -15,11 +14,6 @@ class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
-
-    protected function build(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new ProcessorCompilerPass());
-    }
 
     public function registerBundles(): iterable
     {
