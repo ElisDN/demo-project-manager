@@ -74,3 +74,7 @@ services:
 
     Symfony\Component\HttpFoundation\Session\Session:
         alias: Symfony\Component\HttpFoundation\Session\SessionInterface
+
+    App\Tests\Functional\:
+        resource: '../tests/Functional/**/*Fixture.php'
+        tags: ['doctrine.fixture.orm']
