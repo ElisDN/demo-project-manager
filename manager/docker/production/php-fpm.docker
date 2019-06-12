@@ -27,4 +27,5 @@ ENV APP_ENV prod
 
 RUN php bin/console assets:install
 
-RUN php bin/console cache:warmup
+RUN php bin/console cache:warmup \
+    && chown -R www-data:www-data ./var
