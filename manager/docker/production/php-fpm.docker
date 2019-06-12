@@ -26,3 +26,5 @@ COPY ./ ./
 ENV APP_ENV prod
 
 RUN php bin/console assets:install
+
+RUN php bin/console cache:warmup
