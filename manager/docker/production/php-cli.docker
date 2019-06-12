@@ -24,3 +24,5 @@ COPY --from=builder /app ./
 COPY ./ ./
 
 ENV APP_ENV prod
+
+RUN php bin/console cache:warmup
