@@ -38,6 +38,11 @@ class MainMenu
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', 'nav-link');
 
+        $menu
+            ->addChild('Calendar', ['route' => 'work.projects.calendar'])
+            ->setAttribute('class', 'nav-item')
+            ->setLinkAttribute('class', 'nav-link');
+
         if ($this->auth->isGranted('ROLE_WORK_MANAGE_PROJECTS')) {
             $menu
                 ->addChild('Roles', ['route' => 'work.projects.roles'])

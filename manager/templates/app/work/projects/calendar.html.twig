@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
+        {% if project %}
+            <li class="breadcrumb-item">
+                <a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active">Calendar</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {% if project %}
+        {% include 'app/work/projects/project/_tabs.html.twig' %}
+    {% else %}
+        {% include 'app/work/_tabs.html.twig' %}
+    {% endif %}
+
+    <div class="card">
+        <div class="card-body pb-1">
+
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-2 mb-2">{{ form_widget(form.year) }}</div>
+                <div class="col-md-1 mb-2">{{ form_widget(form.month) }}</div>
+                <div class="col-md-2 mb-2">
+                    <button type="submit" class="btn btn-outline-primary">Show</button>
+                    <a href="?" class="btn btn-outline-primary">Now</a>
+                </div>
+                <div class="col-md-7 mb-2">
+                    <span class="pull-right">
+                        <a href="{{
+                            path(app.request.attributes.get('_route'),
+                            app.request.attributes.get('_route_params')|merge({'form': {'year': prev.format('Y'), 'month': prev.format('n')}}))
+                        }}" class="btn btn-outline-primary"><span class="fa fa-arrow-left"></span></a>
+                        <a href="{{
+                            path(app.request.attributes.get('_route'),
+                            app.request.attributes.get('_route_params')|merge({'form': {'year': next.format('Y'), 'month': next.format('n')}}))
+                        }}" class="btn btn-outline-primary"><span class="fa fa-arrow-right"></span></a>
+                    </span>
+                </div>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+    <div class="box mb-3">
+        <div style="overflow: auto">
+            <table class="table table-bordered calendar mb-0">
+                {% for chunk in dates|batch(7) %}
+                    <thead>
+                        <tr>
+                            {% for date in chunk %}
+                                <td style="white-space: nowrap; text-align: center; width: calc(100% / 7)">
+                                    {% if date.format('Y-m-d') == now.format('Y-m-d') %}
+                                        <strong>{{ date ? date|date('d') : '' }}</strong>
+                                    {% else %}
+                                        {{ date ? date|date('d') : '' }}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% for date in chunk %}
+                                <td class="{{ date.format('m') != result.month.format('m') ? 'muted' : '' }}">
+                                    <div class="day">
+                                        {% set day = date.format('Y-m-d') %}
+
+                                        {% for item in result.items %}
+
+                                            {% set is_date = false %}
+                                            {% set is_plan_date = false %}
+                                            {% set is_start_date = false %}
+                                            {% set is_end_date = false %}
+                                            {% set found = false %}
+
+                                            {% if item.date == day %}
+                                                {% set is_date = true %}
+                                                {% set found = true %}
+                                            {% endif %}
+                                            {% if item.plan_date == day %}
+                                                {% set is_plan_date = true %}
+                                                {% set found = true %}
+                                            {% endif %}
+                                            {% if item.start_date == day %}
+                                                {% set is_start_date = true %}
+                                                {% set found = true %}
+                                            {% endif %}
+                                            {% if item.end_date == day %}
+                                                {% set is_end_date = true %}
+                                                {% set found = true %}
+                                            {% endif %}
+
+                                            {% if found %}
+                                                {% set url = path('work.projects.tasks.show', {'id': item.id}) %}
+                                                <div class="item">
+                                                    <div class="header">
+                                                        <span class="pull-right">
+                                                            <a class="text-black-50" href="{{ url }}">#{{ item.id }}</a>
+                                                        </span>
+                                                        {% if is_date %}
+                                                            <span class="fa fa fa-plus text-warning" title="Create"></span>
+                                                        {% endif %}
+                                                        {% if is_plan_date %}
+                                                            <span class="fa fa fa-calendar-o text-danger" title="Plan"></span>
+                                                        {% endif %}
+                                                        {% if is_start_date %}
+                                                            <span class="fa fa fa-play text-primary" title="Start"></span>
+                                                        {% endif %}
+                                                        {% if is_end_date %}
+                                                            <span class="fa fa fa-stop text-success" title="End"></span>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="link">
+                                                        <a style="color: #333" href="{{ url }}">
+                                                            {{ item.name }}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </td>
+
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
