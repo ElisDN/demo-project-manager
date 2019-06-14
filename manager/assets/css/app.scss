@@ -77,6 +77,36 @@ pre {
     border-radius: 3px;
 }
 
+.table.calendar > tbody > tr > td {
+    padding: 0;
+    vertical-align: top;
+
+    &.muted {
+        background: #f6f6f6;
+    }
+
+    .day {
+        min-height: 100px;
+        padding: 0 4px;
+
+        .item {
+            background: #ffffdd;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 4px 0;
+            padding: 8px;
+
+            .header {
+                margin-bottom: 4px;
+            }
+
+            .link {
+                line-height: 1.2;
+            }
+        }
+    }
+}
+
 .footer {
     background-color: #f5f5f5;
 
