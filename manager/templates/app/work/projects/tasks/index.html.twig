@@ -29,16 +29,17 @@
     {% endif %}
 
     <div class="card">
-        <div class="card-body">
+        <div class="card-body pb-1">
 
             {{ form_start(form) }}
             <div class="row">
-                <div class="col-md-2">{{ form_widget(form.text) }}</div>
-                <div class="col-md-2">{{ form_widget(form.type) }}</div>
-                <div class="col-md-2">{{ form_widget(form.status) }}</div>
-                <div class="col-md-2">{{ form_widget(form.priority) }}</div>
-                <div class="col-md-2">{{ form_widget(form.executor) }}</div>
-                <div class="col-md-2">
+                <div class="col-md-2 mb-2">{{ form_widget(form.text) }}</div>
+                <div class="col-md-2 mb-2">{{ form_widget(form.type) }}</div>
+                <div class="col-md-2 mb-2">{{ form_widget(form.status) }}</div>
+                <div class="col-md-2 mb-2">{{ form_widget(form.priority) }}</div>
+                <div class="col-md-2 mb-2">{{ form_widget(form.author) }}</div>
+                <div class="col-md-2 mb-2">{{ form_widget(form.executor) }}</div>
+                <div class="col-md-2 mb-2">
                     <button type="submit" class="btn btn-primary">Filter</button>
                     <a href="{{ path('work.projects.tasks') }}" class="btn btn-default">Clear</a>
                 </div>

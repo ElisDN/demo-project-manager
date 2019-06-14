@@ -21,9 +21,9 @@ class Form extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $executors = [];
+        $members = [];
         foreach ($this->members->activeGroupedList() as $item) {
-            $executors[$item['group']][$item['name']] = $item['id'];
+            $members[$item['group']][$item['name']] = $item['id'];
         }
 
         $builder
@@ -50,8 +50,12 @@ class Form extends AbstractType
                 'High' => 3,
                 'Extra' => 4
             ], 'required' => false, 'placeholder' => 'All priorities', 'attr' => ['onchange' => 'this.form.submit()']])
+            ->add('author', Type\ChoiceType::class, [
+                'choices' => $members,
+                'required' => false, 'placeholder' => 'All authors', 'attr' => ['onchange' => 'this.form.submit()']
+            ])
             ->add('executor', Type\ChoiceType::class, [
-                'choices' => $executors,
+                'choices' => $members,
                 'required' => false, 'placeholder' => 'All executors', 'attr' => ['onchange' => 'this.form.submit()']
             ]);
     }
