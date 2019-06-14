@@ -7,7 +7,8 @@
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
         <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
+        <li class="breadcrumb-item">
+            <a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
         <li class="breadcrumb-item"><a href="{{ path('work.projects.project.tasks', {'project_id': project.id}) }}">Tasks</a>
         </li>
         <li class="breadcrumb-item active">{{ task.name }}</li>
@@ -45,10 +46,13 @@
             {% endif %}
         {% endif %}
         <a href="{{ path('work.projects.tasks.assign', {'id': task.id}) }}" class="btn btn-primary">Assign Executors</a>
-        <a href="{{ path('work.projects.project.tasks.create', {'project_id': project.id}) }}?parent={{ task.id }}" class="btn btn-primary">Add SubTasks</a>
+        <a href="{{ path('work.projects.project.tasks.create', {'project_id': project.id}) }}?parent={{ task.id }}" class="btn btn-primary">Add
+            SubTasks</a>
         <a href="{{ path('work.projects.tasks.edit', {'id': task.id}) }}" class="btn btn-primary">Edit</a>
         <div class="btn-group">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More&hellip;</button>
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                More&hellip;
+            </button>
             <div class="dropdown-menu" x-placement="bottom-start">
                 <a class="dropdown-item" href="{{ path('work.projects.tasks.move', {'id': task.id}) }}">Move To Project&hellip;</a>
                 <a class="dropdown-item" href="{{ path('work.projects.tasks.child', {'id': task.id}) }}">Set As Child Of&hellip;</a>
@@ -211,7 +215,9 @@
                     <tbody>
                         {% for file in task.files %}
                             <tr>
-                                <td><a href="{{ storage_path(file.info.path ~ '/' ~ file.info.name) }}" target="_blank">{{ file.info.name }}</a></td>
+                                <td>
+                                    <a href="{{ storage_path(file.info.path ~ '/' ~ file.info.name) }}" target="_blank">{{ file.info.name }}</a>
+                                </td>
                                 <td>{{ (file.info.size / 1024)|number_format(2, '.', ',') }} KB</td>
                                 <td>{{ file.date|date('Y-m-d H:i:s') }}</td>
                                 <td>
@@ -232,12 +238,55 @@
             </div>
 
             {% if task.content %}
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body pb-0">
                         {{ task.content|markdown|purify|work_processor }}
                     </div>
                 </div>
             {% endif %}
+
+            <div class="card">
+                <div class="card-header">Comments</div>
+                {% if comments|length %}
+                    <div class="card-body">
+                        <div class="direct-chat">
+                            <div class="direct-chat-messages">
+                                {% for comment in comments %}
+                                    <div class="direct-chat-msg">
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name pull-left">{{ comment.author_name }}</span>
+                                            <span class="direct-chat-timestamp pull-right">{{ comment.date|date('Y-m-d H:i:s') }}</span>
+                                        </div>
+                                        <img class="direct-chat-img" src="{{ gravatar(comment.author_email, 40) }}" alt="">
+                                        <div class="direct-chat-text">
+                                            {{ comment.text|markdown|purify|work_processor }}
+                                            {% if is_granted('manage', comment) %}
+                                                <div class="controls mb-0">
+                                                    <a href="{{ path('work.projects.tasks.comments.edit', {'task_id': task.id, 'id': comment.id}) }}" class="btn btn-sm btn-outline-secondary">
+                                                        <span class="fa fa-pencil"></span>
+                                                    </a>
+                                                    <form action="{{ path('work.projects.tasks.comments.delete', {'task_id': task.id, 'id': comment.id}) }}" method="post" onsubmit="return confirm('Are you sure?')">
+                                                        <input type="hidden" name="token" value="{{ csrf_token('delete-comment') }}" />
+                                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                                            <span class="fa fa-times"></span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="card-body border-top border-light">
+                    {{ form_start(commentForm) }}
+                    {{ form_widget(commentForm) }}
+                    <button type="submit" class="btn btn-primary">Send</button>
+                    {{ form_end(commentForm) }}
+                </div>
+            </div>
 
         </div>
         <div class="col-md-4">
