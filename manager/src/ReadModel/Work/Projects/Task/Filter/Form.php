@@ -57,7 +57,10 @@ class Form extends AbstractType
             ->add('executor', Type\ChoiceType::class, [
                 'choices' => $members,
                 'required' => false, 'placeholder' => 'All executors', 'attr' => ['onchange' => 'this.form.submit()']
-            ]);
+            ])
+            ->add('roots', Type\ChoiceType::class, ['choices' => [
+                'Roots' => Status::NEW,
+            ], 'required' => false, 'placeholder' => 'All levels', 'attr' => ['onchange' => 'this.form.submit()']]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
