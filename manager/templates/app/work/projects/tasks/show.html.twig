@@ -82,7 +82,7 @@
                 <tbody>
                     {% for child in children %}
                         <tr>
-                            <td>{{ child.date|date('Y-m-d H:i') }}</td>
+                            <td>{{ child.date|date('Y-m-d') }}</td>
                             <td>
                                 <a href="{{ path('work.projects.project.show', {'id': child.project_id}) }}">{{ child.project_name }}</a>
                             </td>
