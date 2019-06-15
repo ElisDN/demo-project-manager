@@ -12,7 +12,6 @@ use App\ReadModel\Work\Projects\Task\Filter;
 use App\ReadModel\Work\Projects\Task\TaskFetcher;
 use App\Security\Voter\Work\Projects\ProjectAccess;
 use App\Controller\ErrorHandler;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/work/projects/{project_id}/tasks", name="work.projects.project.tasks")
  * @ParamConverter("project", options={"id" = "project_id"})
- * @Entity("task", expr="repository.findOneBy({'project': project_id, 'id': id})")
  */
 class TasksController extends AbstractController
 {
