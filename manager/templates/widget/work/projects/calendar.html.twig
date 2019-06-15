@@ -1,0 +1,86 @@
+<div class="card">
+    <div class="card-header">
+        Tasks
+    </div>
+    <table class="table table-bordered calendar mb-0">
+        <thead>
+            <tr>
+                {% for date in dates %}
+                    <td style="white-space: nowrap; text-align: center; width: calc(100% / 7)">
+                        {% if date.format('Y-m-d') == now.format('Y-m-d') %}
+                            <strong>{{ date ? date|date('d') : '' }}</strong>
+                        {% else %}
+                            {{ date ? date|date('d') : '' }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for date in dates %}
+                    <td>
+                        <div class="day">
+                            {% set day = date.format('Y-m-d') %}
+
+                            {% for item in result.items %}
+
+                                {% set is_date = false %}
+                                {% set is_plan_date = false %}
+                                {% set is_start_date = false %}
+                                {% set is_end_date = false %}
+                                {% set found = false %}
+
+                                {% if item.date == day %}
+                                    {% set is_date = true %}
+                                    {% set found = true %}
+                                {% endif %}
+                                {% if item.plan_date == day %}
+                                    {% set is_plan_date = true %}
+                                    {% set found = true %}
+                                {% endif %}
+                                {% if item.start_date == day %}
+                                    {% set is_start_date = true %}
+                                    {% set found = true %}
+                                {% endif %}
+                                {% if item.end_date == day %}
+                                    {% set is_end_date = true %}
+                                    {% set found = true %}
+                                {% endif %}
+
+                                {% if found %}
+                                    {% set url = path('work.projects.tasks.show', {'id': item.id}) %}
+                                    <div class="item">
+                                        <div class="header">
+                                            <span class="pull-right">
+                                                <a class="text-black-50" href="{{ url }}">#{{ item.id }}</a>
+                                            </span>
+                                            {% if is_date %}
+                                                <span class="fa fa fa-plus text-warning" title="Create"></span>
+                                            {% endif %}
+                                            {% if is_plan_date %}
+                                                <span class="fa fa fa-calendar-o text-danger" title="Plan"></span>
+                                            {% endif %}
+                                            {% if is_start_date %}
+                                                <span class="fa fa fa-play text-primary" title="Start"></span>
+                                            {% endif %}
+                                            {% if is_end_date %}
+                                                <span class="fa fa fa-stop text-success" title="End"></span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="link">
+                                            <a style="color: #333" href="{{ url }}">
+                                                {{ item.name }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </td>
+
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
