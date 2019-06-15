@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="card-header">
+        <a href="{{ path('work.projects.tasks.own') }}">Own Tasks</a>
+    </div>
+    <table class="table table-bordered table-hover mb-0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Project</th>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>
+                        <a href="{{ path('work.projects.project.show', {'id': task.project_id}) }}">{{ task.project_name }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('work.projects.tasks.show', {'id': task.id}) }}">{{ task.name }}</a>
+                    </td>
+                    <td>{{ work_projects_task_status(task.status) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
