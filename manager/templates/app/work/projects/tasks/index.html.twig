@@ -73,7 +73,7 @@
             {% for task in pagination %}
                 <tr>
                     <td>{{ task.id }}</td>
-                    <td>{{ task.date|date('Y-m-d H:i') }}</td>
+                    <td>{{ task.date|date('Y-m-d') }}</td>
                     <td>{{ task.author_name }}</td>
                     {% if not project %}
                         <td>
