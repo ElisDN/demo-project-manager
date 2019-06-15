@@ -198,4 +198,26 @@ class TaskFetcher
 
         return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
     }
+
+    public function lastOwn(string $member, int $limit): array
+    {
+        $stmt = $this
+            ->connection->createQueryBuilder()
+            ->select(
+                't.id',
+                't.project_id',
+                'p.name project_name',
+                't.name',
+                't.status'
+            )
+            ->from('work_projects_tasks', 't')
+            ->innerJoin('t', 'work_projects_projects', 'p', 't.project_id = p.id')
+            ->andWhere('t.author_id = :member')
+            ->setParameter(':member', $member)
+            ->orderBy('date', 'desc')
+            ->setMaxResults($limit)
+            ->execute();
+
+        return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+    }
 }
