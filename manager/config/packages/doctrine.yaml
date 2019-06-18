@@ -17,6 +17,8 @@ doctrine:
 
         url: '%env(resolve:DATABASE_URL)%'
 
+        schema_filter: '~^(?!work_projects_tasks_seq)~'
+
         types:
             user_user_id: 'App\Model\User\Entity\User\IdType'
             user_user_email: 'App\Model\User\Entity\User\EmailType'
