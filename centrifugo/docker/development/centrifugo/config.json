@@ -6,7 +6,7 @@
             "name": "alerts",
             "publish": false,
             "watch": true,
-            "anonymous": true,
+            "anonymous": false,
             "presence": true,
             "join_leave": true,
             "recover": false,
