@@ -1,0 +1,17 @@
+{
+    "secret": "",
+    "api_key": "",
+    "namespaces": [
+        {
+            "name": "alerts",
+            "publish": false,
+            "watch": false,
+            "anonymous": false,
+            "presence": true,
+            "join_leave": true,
+            "recover": false,
+            "history_size": 10,
+            "history_lifetime": 30
+        }
+    ]
+}
