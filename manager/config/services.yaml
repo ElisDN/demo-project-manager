@@ -89,3 +89,9 @@ services:
 
     App\Model\EventDispatcher:
         class: App\Event\Dispatcher\MessengerEventDispatcher
+
+    phpcent\Client:
+        arguments:
+            - '%env(CENTRIFUGO_API_HOST)%/api'
+            - '%env(CENTRIFUGO_API_KEY)%'
+            - '%env(CENTRIFUGO_SECRET)%'
