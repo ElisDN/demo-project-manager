@@ -117,7 +117,7 @@ services:
             - ./centrifugo/docker/development/centrifugo:/centrifugo
         ports:
             - "8083:8000"
-        command: centrifugo --admin --admin_insecure --client_insecure
+        command: centrifugo --admin --admin_insecure
 
 volumes:
     manager-postgres:
