@@ -22,6 +22,7 @@ services:
             - manager-queue-redis
             - storage
             - mailer
+            - centrifugo
     manager-php-cli:
         build:
             context: ./manager/docker/development
@@ -35,6 +36,7 @@ services:
             - manager-queue-redis
             - storage
             - mailer
+            - centrifugo
     manager-queue-worker:
         build:
             context: ./manager/docker/development
@@ -48,6 +50,7 @@ services:
             - manager-queue-redis
             - storage
             - mailer
+            - centrifugo
         command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && php bin/console messenger:consume async -vv"
     manager-node-watch:
         image: node:11.13-alpine
@@ -101,6 +104,21 @@ services:
         image: mailhog/mailhog
         ports:
             - "8082:8025"
+
+    centrifugo:
+        image: centrifugo/centrifugo:v2.2
+        ulimits:
+            nofile:
+                soft: 65536
+                hard: 65536
+        environment:
+            CENTRIFUGO_SECRET: secret
+            CENTRIFUGO_API_KEY: secret
+        volumes:
+            - ./centrifugo/docker/development/centrifugo:/centrifugo
+        ports:
+            - "8083:8000"
+        command: centrifugo --admin --admin_insecure
 
 volumes:
     manager-postgres:
