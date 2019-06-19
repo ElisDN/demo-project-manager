@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37755e504642de8cad174a99fea55a5e",
+    "content-hash": "c74181637de9367caa1ccc14a40957dd",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -65,6 +65,42 @@
                 "markdown-extra"
             ],
             "time": "2018-03-26T11:24:36+00:00"
+        },
+        {
+            "name": "centrifugal/phpcent",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/centrifugal/phpcent.git",
+                "reference": "7840a41aac2f6d125a61447c57f42dfb82f486d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/centrifugal/phpcent/zipball/7840a41aac2f6d125a61447c57f42dfb82f486d9",
+                "reference": "7840a41aac2f6d125a61447c57f42dfb82f486d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "phpcent": ".."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHP library to communicate with Centrifugo HTTP API",
+            "homepage": "https://github.com/centrifugal/phpcent",
+            "keywords": [
+                "centrifugo"
+            ],
+            "time": "2019-05-14T16:12:41+00:00"
         },
         {
             "name": "doctrine/annotations",
