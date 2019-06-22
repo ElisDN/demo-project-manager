@@ -246,12 +246,13 @@
             {% endif %}
 
             <div class="card">
-                <div class="card-header">Comments</div>
-                {% if comments|length %}
-                    <div class="card-body">
-                        <div class="direct-chat">
-                            <div class="direct-chat-messages">
-                                {% for comment in comments %}
+                <div class="card-header">Work</div>
+                <div class="card-body">
+                    <div class="direct-chat">
+                        <div class="direct-chat-messages">
+                            {% for item in feed.items %}
+                                {% set comment = item.comment %}
+                                {% if comment %}
                                     <div class="direct-chat-msg">
                                         <div class="direct-chat-info clearfix">
                                             <span class="direct-chat-name pull-left">{{ comment.author_name }}</span>
@@ -275,11 +276,18 @@
                                             {% endif %}
                                         </div>
                                     </div>
-                                {% endfor %}
-                            </div>
+                                {% endif %}
+                                {% set action = item.action %}
+                                {% if action %}
+                                    <div class="direct-chat-action">
+                                        {{ action.date|date('Y-m-d H:i') }}
+                                        {{ work_projects_action_row(action) }}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
-                {% endif %}
+                </div>
                 <div class="card-body border-top border-light">
                     {{ form_start(commentForm) }}
                     {{ form_widget(commentForm) }}
@@ -335,22 +343,6 @@
                         </tbody>
                     </table>
                 {% endif %}
-            </div>
-
-            <div class="card">
-                <div class="card-header">History</div>
-                <table class="table mb-0">
-                    <tbody>
-                        {% for action in actions %}
-                            <tr>
-                                <td>
-                                    {{ action.date|date('Y-m-d H:i') }}
-                                    {{ work_projects_action_row(action) }}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
