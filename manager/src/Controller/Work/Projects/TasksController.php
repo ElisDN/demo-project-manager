@@ -22,7 +22,7 @@ use App\Model\Work\UseCase\Projects\Task\Take;
 use App\Model\Work\UseCase\Projects\Task\TakeAndStart;
 use App\Model\Work\UseCase\Projects\Task\Type;
 use App\ReadModel\Work\Members\Member\MemberFetcher;
-use App\ReadModel\Work\Projects\ActionFetcher;
+use App\ReadModel\Work\Projects\Action\ActionFetcher;
 use App\ReadModel\Work\Projects\Task\CommentFetcher;
 use App\ReadModel\Work\Projects\Task\Filter;
 use App\ReadModel\Work\Projects\Task\TaskFetcher;

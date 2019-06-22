@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.projects') }}">Projects</a></li>
+        {% if project %}
+            <li class="breadcrumb-item">
+                <a href="{{ path('work.projects.project.show', {'id': project.id}) }}">{{ project.name }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active">Actions</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {% if project %}
+        {% include 'app/work/projects/project/_tabs.html.twig' %}
+    {% else %}
+        {% include 'app/work/_tabs.html.twig' %}
+    {% endif %}
+
+    <div class="box">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    {% if not project %}
+                        <th>Project</th>
+                    {% endif %}
+                    <th>Task</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for action in pagination %}
+                    <tr>
+                        <td>{{ action.date|date('Y-m-d H:i:s') }}</td>
+                        {% if not project %}
+                            <td>
+                                <a href="{{ path('work.projects.project.show', {'id':  action.project_id}) }}">{{ action.project_name }}</a>
+                            </td>
+                        {% endif %}
+                        <td>
+                            {% if action.task_id %}
+                                <a href="{{ path('work.projects.tasks.show', {'id':  action.task_id}) }}">{{ action.task_name }}</a>
+                            {% endif %}
+                        </td>
+                        <td>{{ work_projects_action_row(action) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+{% endblock %}
