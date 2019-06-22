@@ -20,7 +20,11 @@ class ChangeStatusTest extends TestCase
         $project = (new ProjectBuilder())->build();
         $task = (new TaskBuilder())->build($project, $member);
 
-        $task->changeStatus($status = new Status(Status::WORKING), $date = new \DateTimeImmutable());
+        $task->changeStatus(
+            $member,
+            $date = new \DateTimeImmutable(),
+            $status = new Status(Status::WORKING)
+        );
 
         self::assertEquals($status, $task->getStatus());
 
@@ -35,10 +39,14 @@ class ChangeStatusTest extends TestCase
         $project = (new ProjectBuilder())->build();
         $task = (new TaskBuilder())->build($project, $member);
 
-        $task->changeStatus($status = new Status(Status::WORKING), $date = new \DateTimeImmutable());
+        $task->changeStatus(
+            $member,
+            $date = new \DateTimeImmutable(),
+            $status = new Status(Status::WORKING)
+        );
 
         $this->expectExceptionMessage('Status is already same.');
-        $task->changeStatus($status, $date);
+        $task->changeStatus($member, $date, $status);
     }
 
     public function testDonePriority(): void
@@ -48,7 +56,7 @@ class ChangeStatusTest extends TestCase
         $project = (new ProjectBuilder())->build();
         $task = (new TaskBuilder())->build($project, $member);
 
-        $task->changeStatus($status = new Status(Status::DONE), new \DateTimeImmutable());
+        $task->changeStatus($member, new \DateTimeImmutable(), $status = new Status(Status::DONE));
 
         self::assertEquals($status, $task->getStatus());
         self::assertEquals(100, $task->getProgress());
@@ -62,8 +70,9 @@ class ChangeStatusTest extends TestCase
         $task = (new TaskBuilder())->build($project, $member);
 
         $task->changeStatus(
-            new Status(Status::WORKING),
-            $date = new \DateTimeImmutable('+1 day')
+            $member,
+            $date = new \DateTimeImmutable('+1 day'),
+            new Status(Status::WORKING)
         );
 
         self::assertEquals($date, $task->getStartDate());
@@ -78,13 +87,15 @@ class ChangeStatusTest extends TestCase
         $task = (new TaskBuilder())->build($project, $member);
 
         $task->changeStatus(
-            new Status(Status::WORKING),
-            $startDate = new \DateTimeImmutable('+1 day')
+            $member,
+            $startDate = new \DateTimeImmutable('+1 day'),
+            new Status(Status::WORKING)
         );
 
         $task->changeStatus(
-            new Status(Status::DONE),
-            $endDate = new \DateTimeImmutable('+1 day')
+            $member,
+            $endDate = new \DateTimeImmutable('+1 day'),
+            new Status(Status::DONE)
         );
 
         self::assertEquals($startDate, $task->getStartDate());
@@ -99,8 +110,9 @@ class ChangeStatusTest extends TestCase
         $task = (new TaskBuilder())->build($project, $member);
 
         $task->changeStatus(
-            new Status(Status::DONE),
-            $endDate = new \DateTimeImmutable('+1 day')
+            $member,
+            $endDate = new \DateTimeImmutable('+1 day'),
+            new Status(Status::DONE)
         );
 
         self::assertEquals($endDate, $task->getStartDate());
@@ -115,13 +127,15 @@ class ChangeStatusTest extends TestCase
         $task = (new TaskBuilder())->build($project, $member);
 
         $task->changeStatus(
-            new Status(Status::DONE),
-            $endDate = new \DateTimeImmutable('+1 day')
+            $member,
+            $endDate = new \DateTimeImmutable('+1 day'),
+            new Status(Status::DONE)
         );
 
         $task->changeStatus(
-            new Status(Status::WORKING),
-            new \DateTimeImmutable('+2 days')
+            $member,
+            new \DateTimeImmutable('+2 days'),
+            new Status(Status::WORKING)
         );
 
         self::assertEquals($endDate, $task->getStartDate());
