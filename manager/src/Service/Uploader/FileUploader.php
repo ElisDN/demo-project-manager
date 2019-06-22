@@ -36,4 +36,9 @@ class FileUploader
     {
         return $this->basUrl . '/' . $path;
     }
+
+    public function remove(string $path, string $name): void
+    {
+        $this->storage->delete($path . '/' . $name);
+    }
 }
