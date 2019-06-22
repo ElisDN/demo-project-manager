@@ -22,7 +22,7 @@ class ChangeTypeTest extends TestCase
             ->withType(new Type(Type::FEATURE))
             ->build($project, $member);
 
-        $task->changeType($type = new Type(Type::ERROR));
+        $task->changeType($member, new \DateTimeImmutable(), $type = new Type(Type::ERROR));
 
         self::assertEquals($type, $task->getType());
     }
@@ -37,6 +37,6 @@ class ChangeTypeTest extends TestCase
             ->build($project, $member);
 
         $this->expectExceptionMessage('Type is already same.');
-        $task->changeType($type);
+        $task->changeType($member, new \DateTimeImmutable(), $type);
     }
 }

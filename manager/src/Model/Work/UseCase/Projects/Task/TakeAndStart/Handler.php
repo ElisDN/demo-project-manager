@@ -30,13 +30,13 @@ class Handler
     public function handle(Command $command): void
     {
         $task = $this->tasks->get(new Id($command->id));
-        $member = $this->members->get(new MemberId($command->member));
+        $actor = $this->members->get(new MemberId($command->actor));
 
-        if (!$task->hasExecutor($member->getId())) {
-            $task->assignExecutor($member);
+        if (!$task->hasExecutor($actor->getId())) {
+            $task->assignExecutor($actor, new \DateTimeImmutable(), $actor);
         }
 
-        $task->start(new \DateTimeImmutable());
+        $task->start($actor, new \DateTimeImmutable());
 
         $this->flusher->flush();
     }
