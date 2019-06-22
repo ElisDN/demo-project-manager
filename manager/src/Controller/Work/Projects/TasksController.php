@@ -238,7 +238,7 @@ class TasksController extends AbstractController
      */
     public function fileDelete(Task $task, string $file_id, Request $request, Files\Remove\Handler $handler): Response
     {
-        if (!$this->isCsrfTokenValid('revoke', $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-file', $request->request->get('token'))) {
             return $this->redirectToRoute('work.projects.tasks.show', ['id' => $task->getId()]);
         }
 
