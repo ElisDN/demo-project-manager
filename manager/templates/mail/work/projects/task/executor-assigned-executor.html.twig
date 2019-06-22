@@ -1,0 +1,13 @@
+{% extends 'mail.html.twig' %}
+
+{% block body %}
+
+    <p>Hello, {{ executor.name.first }}!</p>
+
+    <p>You are assigned to task &laquo;{{ task.name }}&raquo;:</p>
+
+    {% set url = url('work.projects.tasks.show', {'id': task.id}) %}
+
+    <p><a href="{{ url }}">{{ url }}</a></p>
+
+{% endblock %}
