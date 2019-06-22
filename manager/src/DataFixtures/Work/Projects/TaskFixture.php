@@ -67,7 +67,7 @@ class TaskFixture extends Fixture implements DependentFixtureInterface
                 $task->changePriority($faker->randomElement(array_diff([1, 2, 3, 4], [$task->getPriority()])));
             }
 
-            if ($faker->boolean(30)) {
+            if ($previous && $faker->boolean(30)) {
                 $task->setChildOf($faker->randomElement($previous));
             }
 
