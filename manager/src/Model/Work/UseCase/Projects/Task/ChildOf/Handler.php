@@ -35,7 +35,7 @@ class Handler
             $task->setRoot();
         }
 
-        $this->flusher->flush();
+        $this->flusher->flush($task);
     }
 }
 

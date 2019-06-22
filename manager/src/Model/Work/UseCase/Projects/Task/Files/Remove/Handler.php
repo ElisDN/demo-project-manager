@@ -31,7 +31,7 @@ class Handler
 
         $task->removeFile($actor, new \DateTimeImmutable(), new FileId($command->file));
 
-        $this->flusher->flush();
+        $this->flusher->flush($task);
     }
 }
 
