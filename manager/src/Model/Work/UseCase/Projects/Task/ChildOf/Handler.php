@@ -27,7 +27,7 @@ class Handler
             $parent = $this->tasks->get(new Id($command->parent));
             $task->setChildOf($parent);
         } else {
-            $task->setChildOf(null);
+            $task->setRoot();
         }
 
         $this->flusher->flush();
