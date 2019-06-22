@@ -12,6 +12,10 @@ class Command
     /**
      * @Assert\NotBlank()
      */
+    public $actor;
+    /**
+     * @Assert\NotBlank()
+     */
     public $id;
     /**
      * @Assert\NotBlank()
@@ -20,14 +24,15 @@ class Command
 
     public $content;
 
-    public function __construct(int $id)
+    public function __construct(string $actor, int $id)
     {
+        $this->actor = $actor;
         $this->id = $id;
     }
 
-    public static function fromTask(Task $task): self
+    public static function fromTask(string $actor, Task $task): self
     {
-        $command = new self($task->getId()->getValue());
+        $command = new self($actor, $task->getId()->getValue());
         $command->name = $task->getName();
         $command->content = $task->getContent();
         return $command;
