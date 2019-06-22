@@ -38,6 +38,7 @@ doctrine:
             work_projects_task_type: 'App\Model\Work\Entity\Projects\Task\TypeType'
             work_projects_task_status: 'App\Model\Work\Entity\Projects\Task\StatusType'
             work_projects_task_file_id: 'App\Model\Work\Entity\Projects\Task\File\IdType'
+            work_projects_task_change_id: 'App\Model\Work\Entity\Projects\Task\Change\IdType'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
