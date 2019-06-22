@@ -86,3 +86,6 @@ services:
 
     App\Service\Uploader\FileUploader:
         arguments: ['@default.storage', '%env(STORAGE_BASE_URL)%']
+
+    App\Model\EventDispatcher:
+        class: App\Event\Dispatcher\MessengerEventDispatcher
