@@ -49,6 +49,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: ROLE_USER }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/oauth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
