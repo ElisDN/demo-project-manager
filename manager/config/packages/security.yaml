@@ -3,10 +3,18 @@ security:
     providers:
         fetcher:
             id: App\Security\UserProvider
+    encoders:
+        App\Security\UserIdentity: native
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api
+            stateless: true
+            user_checker: App\Security\UserChecker
+            http_basic:
+                provider: fetcher
         main:
             anonymous: true
             user_checker: App\Security\UserChecker
