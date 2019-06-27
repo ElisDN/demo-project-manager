@@ -45,13 +45,19 @@ services:
         factory: 'App\Container\Model\User\Service\ResetTokenizerFactory:create'
         arguments: ['PT1H']
 
-    Predis\Client:
-        arguments:
-            - '%env(REDIS_URL)%'
+    Redis:
+        class: Redis
+        calls:
+            -   method: connect
+                arguments:
+                    - '%env(REDIS_HOST)%'
+            -   method: auth
+                arguments:
+                    - '%env(REDIS_PASSWORD)%'
 
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:
-            - '@Predis\Client'
+            - '@Redis'
 
     App\Widget\:
         resource: '../src/Widget'
