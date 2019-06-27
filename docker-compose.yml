@@ -73,7 +73,7 @@ services:
         ports:
             - "54321:5432"
     manager-redis:
-        image: redis:3.0-alpine
+        image: redis:5.0-alpine
         volumes:
             - manager-redis:/data
         command: redis-server --requirepass secret
