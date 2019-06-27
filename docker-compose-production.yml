@@ -92,7 +92,13 @@ services:
         restart: always
         volumes:
             - manager-redis:/data
-        command: redis-server --requirepass ${MANAGER_REDIS_PASSWORD}
+        command:
+            - 'redis-server'
+            - '--databases 2'
+            - '--save 900 1'
+            - '--save 300 10'
+            - '--save 60 10000'
+            - '--requirepass ${MANAGER_REDIS_PASSWORD}'
     manager-queue-redis:
         image: redis:5.0-alpine
         volumes:
