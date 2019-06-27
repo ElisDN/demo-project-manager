@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/api", name="api", methods={"GET"})
+     * @Route("", name="home", methods={"GET"})
      * @return Response
      */
     public function home(): Response
