@@ -4,6 +4,8 @@ api:
     name_prefix: api.
     trailing_slash_on_root: false
     type: annotation
+    defaults:
+        _format: json
 
 controllers:
     resource: ../../src/Controller/
