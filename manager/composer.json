@@ -12,7 +12,7 @@
         "exercise/htmlpurifier-bundle": "^2.0",
         "finesse/swiftmailer-defaults-plugin": "^2.0",
         "knplabs/knp-menu-bundle": "dev-master",
-        "knplabs/knp-paginator-bundle": "^3.0",
+        "knplabs/knp-paginator-bundle": "^4.0",
         "knpuniversity/oauth2-client-bundle": "^1.28",
         "league/flysystem-bundle": "^1.1",
         "league/oauth2-facebook": "^2.0",
