@@ -9,9 +9,7 @@ use App\ReadModel\Work\Projects\Task\Filter\Filter;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\Pagination\AbstractPagination;
 use Knp\Component\Pager\Pagination\PaginationInterface;
-use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\PaginatorInterface;
 
 class TaskFetcher
@@ -130,10 +128,9 @@ class TaskFetcher
 
         $qb->orderBy($sort, $direction);
 
-        /** @var AbstractPagination $pagination */
         $pagination = $this->paginator->paginate($qb, $page, $size);
 
-        $tasks = $pagination->getItems();
+        $tasks = (array)$pagination->getItems();
         $executors = $this->batchLoadExecutors(array_column($tasks, 'id'));
 
         $pagination->setItems(array_map(static function (array $task) use ($executors) {
