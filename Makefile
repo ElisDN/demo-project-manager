@@ -20,7 +20,7 @@ docker-pull:
 docker-build:
 	docker-compose build
 
-manager-init: manager-composer-install manager-assets-install manager-wait-db manager-migrations manager-fixtures manager-ready
+manager-init: manager-composer-install manager-assets-install manager-oauth-keys manager-wait-db manager-migrations manager-fixtures manager-ready
 
 manager-clear:
 	docker run --rm -v ${PWD}/manager:/app --workdir=/app alpine rm -f .ready
@@ -31,6 +31,12 @@ manager-composer-install:
 manager-assets-install:
 	docker-compose run --rm manager-node yarn install
 	docker-compose run --rm manager-node npm rebuild node-sass
+
+manager-oauth-keys:
+	docker-compose run --rm manager-php-cli mkdir -p var/oauth
+	docker-compose run --rm manager-php-cli openssl genrsa -out var/oauth/private.key 2048
+	docker-compose run --rm manager-php-cli openssl rsa -in var/oauth/private.key -pubout -out var/oauth/public.key
+	docker-compose run --rm manager-php-cli chmod 644 var/oauth/private.key var/oauth/public.key
 
 manager-wait-db:
 	until docker-compose exec -T manager-postgres pg_isready --timeout=0 --dbname=app ; do sleep 1 ; done

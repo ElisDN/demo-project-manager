@@ -16,6 +16,7 @@
         "knpuniversity/oauth2-client-bundle": "^1.28",
         "league/flysystem-bundle": "^1.1",
         "league/oauth2-facebook": "^2.0",
+        "nyholm/psr7": "^1.1",
         "ramsey/uuid": "^3.8",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.3.*",
@@ -38,6 +39,7 @@
         "symfony/web-link": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "4.3.*",
+        "trikoder/oauth2-bundle": "2.0.0-beta1",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {
