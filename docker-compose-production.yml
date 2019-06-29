@@ -26,6 +26,7 @@ services:
             CENTRIFUGO_API_HOST: http://centrifugo:8000
             CENTRIFUGO_API_KEY: ${CENTRIFUGO_API_KEY}
             CENTRIFUGO_SECRET: ${CENTRIFUGO_SECRET}
+            OAUTH_ENCRYPTION_KEY: ${OAUTH_ENCRYPTION_KEY}
         depends_on:
             - manager-postgres
             - manager-redis
@@ -49,6 +50,7 @@ services:
             CENTRIFUGO_API_HOST: http://centrifugo:8000
             CENTRIFUGO_API_KEY: ${CENTRIFUGO_API_KEY}
             CENTRIFUGO_SECRET: ${CENTRIFUGO_SECRET}
+            OAUTH_ENCRYPTION_KEY: ${OAUTH_ENCRYPTION_KEY}
         depends_on:
             - manager-postgres
             - manager-redis
@@ -72,6 +74,7 @@ services:
             CENTRIFUGO_API_HOST: http://centrifugo:8000
             CENTRIFUGO_API_KEY: ${CENTRIFUGO_API_KEY}
             CENTRIFUGO_SECRET: ${CENTRIFUGO_SECRET}
+            OAUTH_ENCRYPTION_KEY: ${OAUTH_ENCRYPTION_KEY}
         depends_on:
             - manager-postgres
             - manager-redis
