@@ -5,6 +5,9 @@
     "centrifugal/phpcent": {
         "version": "3.0.0"
     },
+    "defuse/php-encryption": {
+        "version": "v2.2.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -171,6 +174,12 @@
             "config/packages/knpu_oauth2_client.yaml"
         ]
     },
+    "lcobucci/jwt": {
+        "version": "3.3.1"
+    },
+    "league/event": {
+        "version": "2.2.0"
+    },
     "league/flysystem": {
         "version": "1.0.52"
     },
@@ -193,14 +202,32 @@
     "league/oauth2-facebook": {
         "version": "2.0.1"
     },
+    "league/oauth2-server": {
+        "version": "7.4.0"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
     "nikic/php-parser": {
         "version": "v4.2.1"
     },
+    "nyholm/psr7": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "5e29a795c9996269c4cea2e87eeb3052c33cf98e"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
+    },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -216,6 +243,9 @@
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
     },
     "psr/http-message": {
         "version": "1.0.1"
@@ -459,6 +489,9 @@
     "symfony/property-info": {
         "version": "v4.2.4"
     },
+    "symfony/psr-http-message-bridge": {
+        "version": "v1.2.0"
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {
@@ -615,6 +648,9 @@
     },
     "symfony/yaml": {
         "version": "v4.2.4"
+    },
+    "trikoder/oauth2-bundle": {
+        "version": "v2.0.0-beta1"
     },
     "twig/twig": {
         "version": "v2.7.2"
