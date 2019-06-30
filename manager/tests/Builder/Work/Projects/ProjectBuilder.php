@@ -18,6 +18,13 @@ class ProjectBuilder
         $this->sort = 1;
     }
 
+    public function withName(string $name): self
+    {
+        $clone = clone $this;
+        $clone->name = $name;
+        return $clone;
+    }
+
     public function build(): Project
     {
         return new Project(
