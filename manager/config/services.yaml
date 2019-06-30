@@ -83,11 +83,11 @@ services:
 
     cebe\markdown\MarkdownExtra:
 
-    App\Twig\Extension\Work\Processor\Driver\:
-        resource: '../src/Twig/Extension/Work/Processor/Driver/*Driver.php'
+    App\Service\Work\Processor\Driver\:
+        resource: '../src/Service/Work/Processor/Driver/*Driver.php'
         tags: ['app.twig.work_processor.driver']
 
-    App\Twig\Extension\Work\Processor\ProcessorExtension:
+    App\Service\Work\Processor\Processor:
         arguments: [!tagged app.twig.work_processor.driver]
 
     App\Service\Uploader\FileUploader:
