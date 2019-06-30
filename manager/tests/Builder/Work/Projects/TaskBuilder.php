@@ -29,6 +29,13 @@ class TaskBuilder
         $this->content = 'Content';
     }
 
+    public function withId(Id $id): self
+    {
+        $clone = clone $this;
+        $clone->id = $id;
+        return $clone;
+    }
+
     public function withType(Type $type): self
     {
         $clone = clone $this;
