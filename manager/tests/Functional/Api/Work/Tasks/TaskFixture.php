@@ -20,6 +20,7 @@ class TaskFixture extends Fixture implements DependentFixtureInterface
 {
     public const TASK_IN_PROJECT_WITH_USER = 10000001;
     public const TASK_IN_PROJECT_WITHOUT_USER = 10000002;
+    public const TASK_IN_PROJECT_WITH_USER_WITH_PLAN = 10000003;
 
     public function load(ObjectManager $manager): void
     {
@@ -44,6 +45,12 @@ class TaskFixture extends Fixture implements DependentFixtureInterface
         $task = (new TaskBuilder())
             ->withId(new TaskId(self::TASK_IN_PROJECT_WITH_USER))
             ->build($project, $userMember);
+        $manager->persist($task);
+
+        $task = (new TaskBuilder())
+            ->withId(new TaskId(self::TASK_IN_PROJECT_WITH_USER_WITH_PLAN))
+            ->build($project, $userMember);
+        $task->plan($userMember, new \DateTimeImmutable(), new \DateTimeImmutable('+1 day'));
         $manager->persist($task);
 
         $project = (new ProjectBuilder())->withName('Project Without User')->build();
