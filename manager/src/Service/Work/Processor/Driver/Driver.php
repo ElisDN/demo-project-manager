@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Twig\Extension\Work\Processor\Driver;
+namespace App\Service\Work\Processor\Driver;
 
 interface Driver
 {
