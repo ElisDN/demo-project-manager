@@ -39,7 +39,7 @@
         "symfony/web-link": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "4.3.*",
-        "trikoder/oauth2-bundle": "2.0.0-beta1",
+        "trikoder/oauth2-bundle": "^2.0",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {
