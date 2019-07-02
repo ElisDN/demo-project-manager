@@ -1,8 +1,7 @@
 <a href="{{ path('work.members.show', {'id': action.actor_id}) }}">{{ action.actor_name }}</a>
 
 {% if action.set_project_id and action.set_name %}
-    created &laquo;{{ action.set_name }}&raquo;
-    in
+    created in
     <a href="{{ path('work.projects.project.show', {'id': action.set_project_id}) }}">{{ action.set_project_name }}</a>
     as a {{ work_projects_task_type(action.set_type) }}
     with priority {{ work_projects_task_priority(action.set_priority) }}
