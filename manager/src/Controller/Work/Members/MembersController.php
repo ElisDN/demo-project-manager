@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MembersController extends AbstractController
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 50;
 
     private $errors;
 
