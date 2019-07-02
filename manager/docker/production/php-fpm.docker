@@ -1,4 +1,4 @@
-FROM php:7.2-cli AS php-cli-builder
+FROM php:7.3-cli AS php-cli-builder
 
 RUN apt-get update && apt-get install -y unzip
 
@@ -28,7 +28,7 @@ RUN npm run build
 
 ######################
 
-FROM php:7.2-fpm
+FROM php:7.3-fpm
 
 RUN pecl install -o -f redis \
     && rm -rf /tmp/pear \
