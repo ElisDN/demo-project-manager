@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UsersController extends AbstractController
 {
-    private const PER_PAGE = 10;
+    private const PER_PAGE = 50;
 
     private $errors;
 
