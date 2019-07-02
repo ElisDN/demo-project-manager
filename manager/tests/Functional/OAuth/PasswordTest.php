@@ -13,14 +13,7 @@ class PasswordTest extends DbWebTestCase
     public function testMethod(): void
     {
         $this->client->request('GET', self::URI);
-        self::assertEquals(400, $this->client->getResponse()->getStatusCode());
-        self::assertJson($content = $this->client->getResponse()->getContent());
-
-        $data = json_decode($content, true);
-
-        self::assertArraySubset([
-            'error' => 'unsupported_grant_type',
-        ], $data);
+        self::assertEquals(405, $this->client->getResponse()->getStatusCode());
     }
 
     public function testSuccess(): void
