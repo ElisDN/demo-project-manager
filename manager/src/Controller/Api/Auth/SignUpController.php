@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api\Auth;
 
 use App\Model\User\UseCase\SignUp;
+use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,40 @@ class SignUpController extends AbstractController
     }
 
     /**
+     * @OA\Post(
+     *     path="/auth/signup",
+     *     tags={"Sign Up"},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             type="object",
+     *             required={"first_name", "last_name", "email", "password"},
+     *             @OA\Property(property="first_name", type="string"),
+     *             @OA\Property(property="last_name", type="string"),
+     *             @OA\Property(property="email", type="string"),
+     *             @OA\Property(property="password", type="string"),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Success response",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Errors",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="object", nullable=true,
+     *                 @OA\Property(property="code", type="integer"),
+     *                 @OA\Property(property="message", type="string"),
+     *             ),
+     *             @OA\Property(property="violations", type="array", nullable=true, @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="propertyPath", type="string"),
+     *                 @OA\Property(property="title", type="string"),
+     *             ))
+     *         )
+     *     ),
+     * )
      * @Route("/auth/signup", name="auth.signup", methods={"POST"})
      * @param Request $request
      * @param SignUp\Request\Handler $handler
