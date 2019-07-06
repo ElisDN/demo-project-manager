@@ -7,6 +7,7 @@ namespace App\Controller\Api\Work\Projects;
 use App\Controller\Api\PaginationSerializer;
 use App\ReadModel\Work\Projects\Project\Filter;
 use App\ReadModel\Work\Projects\Project\ProjectFetcher;
+use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,45 @@ class ProjectsController extends AbstractController
     }
 
     /**
+     * @OA\Get(
+     *     path="/work/projects",
+     *     tags={"Work Projects"},
+     *     @OA\Parameter(
+     *         name="filter[name]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Parameter(
+     *         name="filter[status]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="items", type="array", @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="string"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="status", type="string"),
+     *             )),
+     *             @OA\Property(property="pagination", type="object",
+     *                 @OA\Property(property="count", type="integer"),
+     *                 @OA\Property(property="total", type="integer"),
+     *                 @OA\Property(property="per_page", type="integer"),
+     *                 @OA\Property(property="page", type="integer"),
+     *                 @OA\Property(property="pages", type="integer"),
+     *             ),
+     *         )
+     *     ),
+     *     security={{"oauth2": {"common"}}}
+     * )
      * @Route("/work/projects", name="work.projects", methods={"GET"})
      * @param Request $request
      * @param ProjectFetcher $fetcher

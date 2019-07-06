@@ -19,6 +19,7 @@ use App\Security\Voter\Work\Projects\TaskAccess;
 use App\Service\Gravatar;
 use App\Service\Uploader\FileUploader;
 use App\Service\Work\Processor\Processor;
+use OpenApi\Annotations as OA;
 use cebe\markdown\MarkdownExtra;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -49,6 +50,99 @@ class TasksController extends AbstractController
     }
 
     /**
+     * @OA\Get(
+     *     path="/work/tasks",
+     *     tags={"Work Task"},
+     *     @OA\Parameter(
+     *         name="filter[author]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Parameter(
+     *         name="filter[text]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Parameter(
+     *         name="filter[type]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Parameter(
+     *         name="filter[status]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Parameter(
+     *         name="filter[priority]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Parameter(
+     *         name="filter[executor]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Parameter(
+     *         name="filter[roots]",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         style="form"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="items", type="array", @OA\Items(
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="project", type="object",
+     *                     @OA\Property(property="id", type="string"),
+     *                     @OA\Property(property="name", type="string"),
+     *                 ),
+     *                 @OA\Property(property="author", type="object",
+     *                     @OA\Property(property="id", type="string"),
+     *                     @OA\Property(property="name", type="string"),
+     *                 ),
+     *                 @OA\Property(property="date", type="string"),
+     *                 @OA\Property(property="plan_date", type="string", nullable=true),
+     *                 @OA\Property(property="start_date", type="string", nullable=true),
+     *                 @OA\Property(property="end_date", type="string", nullable=true),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="parent", type="string"),
+     *                 @OA\Property(property="type", type="string"),
+     *                 @OA\Property(property="progress", type="integer"),
+     *                 @OA\Property(property="priority", type="integer"),
+     *                 @OA\Property(property="status", type="string"),
+     *                 @OA\Property(property="executors", type="array", @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="name", type="string"),
+     *                 )),
+     *             )),
+     *             @OA\Property(property="pagination", type="object",
+     *                 @OA\Property(property="count", type="integer"),
+     *                 @OA\Property(property="total", type="integer"),
+     *                 @OA\Property(property="per_page", type="integer"),
+     *                 @OA\Property(property="page", type="integer"),
+     *                 @OA\Property(property="pages", type="integer"),
+     *             ),
+     *         )
+     *     ),
+     *     security={{"oauth2": {"common"}}}
+     * )
      * @Route("", name="", methods={"GET"})
      * @param Request $request
      * @param TaskFetcher $fetcher
@@ -109,6 +203,47 @@ class TasksController extends AbstractController
     }
 
     /**
+     * @OA\Put(
+     *     path="/work/tasks/{id}/plan",
+     *     tags={"Work Task"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             type="object",
+     *             required={"date"},
+     *             @OA\Property(property="date", type="string"),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Errors",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="object", nullable=true,
+     *                 @OA\Property(property="code", type="integer"),
+     *                 @OA\Property(property="message", type="string"),
+     *             ),
+     *             @OA\Property(property="violations", type="array", nullable=true, @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="propertyPath", type="string"),
+     *                 @OA\Property(property="title", type="string"),
+     *             ))
+     *         )
+     *     ),
+     *     security={{"oauth2": {"common"}}}
+     * )
      * @Route("/{id}/plan", name=".plan", methods={"PUT"})
      * @param Task $task
      * @param Request $request
@@ -137,6 +272,35 @@ class TasksController extends AbstractController
     }
 
     /**
+     * @OA\Delete(
+     *     path="/work/tasks/{id}/plan",
+     *     tags={"Work Task"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Success response",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Errors",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="object", nullable=true,
+     *                 @OA\Property(property="code", type="integer"),
+     *                 @OA\Property(property="message", type="string"),
+     *             )
+     *         )
+     *     ),
+     *     security={{"oauth2": {"common"}}}
+     * )
      * @Route("/{id}/plan", name=".plan.delete", methods={"DELETE"})
      * @param Task $task
      * @param Plan\Remove\Handler $handler
@@ -153,6 +317,119 @@ class TasksController extends AbstractController
     }
 
     /**
+     * @OA\Get(
+     *     path="/work/tasks/{id}",
+     *     tags={"Work Task"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="project", type="object",
+     *                 @OA\Property(property="id", type="string"),
+     *                 @OA\Property(property="name", type="string"),
+     *             ),
+     *             @OA\Property(property="author", type="object",
+     *                 @OA\Property(property="id", type="string"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="avatar", type="string"),
+     *             ),
+     *             @OA\Property(property="date", type="string"),
+     *             @OA\Property(property="plan_date", type="string", nullable=true),
+     *             @OA\Property(property="start_date", type="string", nullable=true),
+     *             @OA\Property(property="end_date", type="string", nullable=true),
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="content", type="string"),
+     *             @OA\Property(property="files", type="array", @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="string"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="member", type="object",
+     *                     @OA\Property(property="id", type="string"),
+     *                     @OA\Property(property="name", type="string"),
+     *                 ),
+     *                 @OA\Property(property="info", type="object",
+     *                     @OA\Property(property="url", type="string"),
+     *                     @OA\Property(property="name", type="string"),
+     *                     @OA\Property(property="size", type="integer"),
+     *                 ),
+     *             )),
+     *             @OA\Property(property="type", type="string"),
+     *             @OA\Property(property="progress", type="integer"),
+     *             @OA\Property(property="priority", type="integer"),
+     *             @OA\Property(property="parent", type="object", nullable=true,
+     *                 @OA\Property(property="url", type="string"),
+     *                 @OA\Property(property="name", type="string")
+     *             ),
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="executors", type="array", @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="string"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="avatar", type="string"),
+     *             )),
+     *             @OA\Property(property="feed", type="array", @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="date", type="string"),
+     *                 @OA\Property(property="action", type="object", nullable=true,
+     *                     @OA\Property(property="id", type="string"),
+     *                     @OA\Property(property="date", type="string"),
+     *                     @OA\Property(property="actor", type="object",
+     *                         @OA\Property(property="id", type="string"),
+     *                         @OA\Property(property="name", type="string"),
+     *                     ),
+     *                     @OA\Property(property="set", type="object",
+     *                         @OA\Property(property="project", type="object", nullable=true,
+     *                             @OA\Property(property="id", type="string"),
+     *                             @OA\Property(property="name", type="string"),
+     *                         ),
+     *                         @OA\Property(property="name", type="string", nullable=true),
+     *                         @OA\Property(property="content", type="string", nullable=true),
+     *                         @OA\Property(property="file", type="string", nullable=true),
+     *                         @OA\Property(property="removed_file", type="string", nullable=true),
+     *                         @OA\Property(property="parent", type="string", nullable=true),
+     *                         @OA\Property(property="removed_parent", type="boolean", nullable=true),
+     *                         @OA\Property(property="type", type="string", nullable=true),
+     *                         @OA\Property(property="status", type="string", nullable=true),
+     *                         @OA\Property(property="progress", type="integer", nullable=true),
+     *                         @OA\Property(property="priority", type="integer", nullable=true),
+     *                         @OA\Property(property="plan", type="string", nullable=true),
+     *                         @OA\Property(property="removed_plan", type="boolean", nullable=true),
+     *                         @OA\Property(property="executor", type="object", nullable=true,
+     *                             @OA\Property(property="id", type="string"),
+     *                             @OA\Property(property="name", type="string"),
+     *                         ),
+     *                         @OA\Property(property="revoked_executor", type="object", nullable=true,
+     *                             @OA\Property(property="id", type="string"),
+     *                             @OA\Property(property="name", type="string"),
+     *                         ),
+     *                     ),
+     *                 ),
+     *                 @OA\Property(property="comment", type="object", nullable=true,
+     *                     @OA\Property(property="id", type="string"),
+     *                     @OA\Property(property="date", type="string"),
+     *                     @OA\Property(property="author", type="object",
+     *                         @OA\Property(property="id", type="string"),
+     *                         @OA\Property(property="name", type="string"),
+     *                         @OA\Property(property="avatar", type="string"),
+     *                     ),
+     *                     @OA\Property(property="content", type="string"),
+     *                 ),
+     *             )),
+     *         )
+     *     ),
+     *     security={{"oauth2": {"common"}}}
+     * )
      * @Route("/{id}", name=".show", requirements={"id"="\d+"}))
      * @param Task $task
      * @param CommentFetcher $comments
