@@ -24,7 +24,7 @@ class SetRootTest extends TestCase
 
         self::assertEquals($parent, $task->getParent());
 
-        $task->setRoot();
+        $task->setRoot($member, new \DateTimeImmutable());
 
         self::assertNull($task->getParent());
     }
