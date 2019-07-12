@@ -30,12 +30,12 @@ class SignUpController extends AbstractController
      * @Route("/signup", name="auth.signup")
      * @param Request $request
      * @param SignUp\Request\Handler $handler
+	 * @param SignUp\Request\Command $command
+	 *
      * @return Response
      */
-    public function request(Request $request, SignUp\Request\Handler $handler): Response
+    public function request(Request $request, SignUp\Request\Handler $handler, SignUp\Request\Command $command): Response
     {
-        $command = new SignUp\Request\Command();
-
         $form = $this->createForm(SignUp\Request\Form::class, $command);
         $form->handleRequest($request);
 
