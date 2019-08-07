@@ -53,13 +53,13 @@ services:
             - centrifugo
         command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && php bin/console messenger:consume async -vv"
     manager-node-watch:
-        image: node:11.13-alpine
+        image: node:12.7-alpine
         volumes:
             - ./manager:/app
         working_dir: /app
         command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && npm run watch"
     manager-node:
-        image: node:11.13-alpine
+        image: node:12.7-alpine
         volumes:
             - ./manager:/app
         working_dir: /app
