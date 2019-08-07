@@ -14,7 +14,7 @@ RUN composer install --no-dev --no-scripts --prefer-dist --optimize-autoloader
 
 ######################
 
-FROM node:11.13-alpine AS node-builder
+FROM node:12.7-alpine AS node-builder
 
 WORKDIR /app
 
