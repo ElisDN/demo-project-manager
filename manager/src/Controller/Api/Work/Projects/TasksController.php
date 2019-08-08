@@ -158,7 +158,7 @@ class TasksController extends AbstractController
                     'name' => $member->getName()->getFull(),
                     'avatar' => Gravatar::url($member->getEmail()->getValue(), 100),
                 ];
-            }, $task->getFiles()),
+            }, $task->getExecutors()),
             'feed' => array_map(static function (Item $item) use ($markdown, $purifier, $processor) {
                 $action = $item->getAction();
                 $comment = $item->getComment();
