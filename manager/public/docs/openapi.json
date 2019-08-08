@@ -55,36 +55,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "properties": {
-                                                "code": {
-                                                    "type": "integer"
-                                                },
-                                                "message": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object",
-                                            "nullable": true
-                                        },
-                                        "violations": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "propertyPath": {
-                                                        "type": "string"
-                                                    },
-                                                    "title": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            },
-                                            "nullable": true
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ErrorModel"
                                 }
                             }
                         }
@@ -154,36 +125,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "properties": {
-                                                "code": {
-                                                    "type": "integer"
-                                                },
-                                                "message": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object",
-                                            "nullable": true
-                                        },
-                                        "violations": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "propertyPath": {
-                                                        "type": "string"
-                                                    },
-                                                    "title": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            },
-                                            "nullable": true
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ErrorModel"
                                 }
                             }
                         }
@@ -578,36 +520,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "properties": {
-                                                "code": {
-                                                    "type": "integer"
-                                                },
-                                                "message": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object",
-                                            "nullable": true
-                                        },
-                                        "violations": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "propertyPath": {
-                                                        "type": "string"
-                                                    },
-                                                    "title": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            },
-                                            "nullable": true
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ErrorModel"
                                 }
                             }
                         }
@@ -646,21 +559,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "properties": {
-                                                "code": {
-                                                    "type": "integer"
-                                                },
-                                                "message": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object",
-                                            "nullable": true
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ErrorModel"
                                 }
                             }
                         }
@@ -998,6 +897,40 @@
         }
     },
     "components": {
+        "schemas": {
+            "ErrorModel": {
+                "properties": {
+                    "error": {
+                        "properties": {
+                            "code": {
+                                "type": "integer"
+                            },
+                            "message": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object",
+                        "nullable": true
+                    },
+                    "violations": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "propertyPath": {
+                                    "type": "string"
+                                },
+                                "title": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "oauth2": {
                 "type": "oauth2",
