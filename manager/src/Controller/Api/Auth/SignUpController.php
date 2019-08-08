@@ -46,18 +46,7 @@ class SignUpController extends AbstractController
      *     @OA\Response(
      *         response=400,
      *         description="Errors",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="object", nullable=true,
-     *                 @OA\Property(property="code", type="integer"),
-     *                 @OA\Property(property="message", type="string"),
-     *             ),
-     *             @OA\Property(property="violations", type="array", nullable=true, @OA\Items(
-     *                 type="object",
-     *                 @OA\Property(property="propertyPath", type="string"),
-     *                 @OA\Property(property="title", type="string"),
-     *             ))
-     *         )
+     *         @OA\JsonContent(ref="#/components/schemas/ErrorModel")
      *     ),
      * )
      * @Route("/auth/signup", name="auth.signup", methods={"POST"})
