@@ -172,10 +172,10 @@ class TasksController extends AbstractController
                             'name' => $action['actor_name'],
                         ],
                         'set' => [
-                            'project' => [
+                            'project' => $action['set_project_id'] ? [
                                 'id' => $action['set_project_id'],
                                 'name' => $action['set_project_name'],
-                            ],
+                            ] : null,
                             'name' => $action['set_name'],
                             'content' => $action['set_content'],
                             'file' => $action['set_file_id'],
@@ -188,14 +188,14 @@ class TasksController extends AbstractController
                             'priority' => $action['set_priority'],
                             'plan' => $action['set_plan'],
                             'removed_plan' => $action['set_removed_plan'],
-                            'executor' => [
+                            'executor' => $action['set_executor_id'] ? [
                                 'id' => $action['set_executor_id'],
                                 'name' => $action['set_executor_name'],
-                            ],
-                            'revoked_executor' => [
+                            ] : null,
+                            'revoked_executor' => $action['set_revoked_executor_id'] ? [
                                 'id' => $action['set_revoked_executor_id'],
                                 'name' => $action['set_revoked_executor_name'],
-                            ],
+                            ] : null,
                         ],
                     ] : null,
                     'comment' => $comment ? [
