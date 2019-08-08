@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api\Work\Projects;
 
+use App\Controller\Api\PaginationSerializer;
 use App\Model\Work\Entity\Members\Member\Member;
 use App\Model\Work\Entity\Projects\Task\File\File;
 use App\Model\Work\Entity\Projects\Task\Task;
@@ -12,6 +13,8 @@ use App\ReadModel\Work\Projects\Action\ActionFetcher;
 use App\ReadModel\Work\Projects\Action\Feed\Feed;
 use App\ReadModel\Work\Projects\Action\Feed\Item;
 use App\ReadModel\Work\Projects\Task\CommentFetcher;
+use App\ReadModel\Work\Projects\Task\Filter;
+use App\ReadModel\Work\Projects\Task\TaskFetcher;
 use App\Security\Voter\Work\Projects\TaskAccess;
 use App\Service\Gravatar;
 use App\Service\Uploader\FileUploader;
@@ -22,6 +25,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -30,13 +35,77 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class TasksController extends AbstractController
 {
+    private const PER_PAGE = 50;
+
     private $serializer;
+    private $denormalizer;
     private $validator;
 
-    public function __construct(SerializerInterface $serializer, ValidatorInterface $validator)
+    public function __construct(SerializerInterface $serializer, DenormalizerInterface $denormalizer, ValidatorInterface $validator)
     {
         $this->serializer = $serializer;
+        $this->denormalizer = $denormalizer;
         $this->validator = $validator;
+    }
+
+    /**
+     * @Route("", name="", methods={"GET"})
+     * @param Request $request
+     * @param TaskFetcher $fetcher
+     * @return Response
+     * @throws ExceptionInterface
+     */
+    public function index(Request $request, TaskFetcher $fetcher): Response
+    {
+        if ($this->isGranted('ROLE_WORK_MANAGE_PROJECTS')) {
+            $filter = Filter\Filter::all();
+        } else {
+            $filter = Filter\Filter::all()->forMember($this->getUser()->getId());
+        }
+
+        /** @var Filter\Filter $filter */
+        $filter = $this->denormalizer->denormalize($request->query->get('filter', []), Filter\Filter::class, 'array', [
+            'object_to_populate' => $filter,
+            'ignored_attributes' => ['member', 'project'],
+        ]);
+
+        $pagination = $fetcher->all(
+            $filter,
+            $request->query->getInt('page', 1),
+            self::PER_PAGE,
+            $request->query->get('sort'),
+            $request->query->get('direction')
+        );
+
+        return $this->json([
+            'items' => array_map(static function (array $item) {
+                return [
+                    'id' => $item['id'],
+                    'project' => [
+                        'id' => $item['project_id'],
+                        'name' => $item['project_name'],
+                    ],
+                    'author' => [
+                        'id' => $item['author_id'],
+                        'name' => $item['author_name'],
+                    ],
+                    'date' => $item['date'],
+                    'plan_date' => $item['plan_date'],
+                    'parent' => $item['parent'],
+                    'name' => $item['name'],
+                    'type' => $item['type'],
+                    'progress' => $item['progress'],
+                    'priority' => $item['priority'],
+                    'status' => $item['status'],
+                    'executors'=> array_map(static function (array $member) {
+                        return [
+                            'name' => $member['name'],
+                        ];
+                    }, $item['executors']),
+                ];
+            }, (array)$pagination->getItems()),
+            'pagination' => PaginationSerializer::toArray($pagination),
+        ]);
     }
 
     /**
