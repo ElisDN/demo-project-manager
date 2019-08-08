@@ -251,24 +251,7 @@
                                             }
                                         },
                                         "pagination": {
-                                            "properties": {
-                                                "count": {
-                                                    "type": "integer"
-                                                },
-                                                "total": {
-                                                    "type": "integer"
-                                                },
-                                                "per_page": {
-                                                    "type": "integer"
-                                                },
-                                                "page": {
-                                                    "type": "integer"
-                                                },
-                                                "pages": {
-                                                    "type": "integer"
-                                                }
-                                            },
-                                            "type": "object"
+                                            "$ref": "#/components/schemas/Pagination"
                                         }
                                     },
                                     "type": "object"
@@ -442,24 +425,7 @@
                                             }
                                         },
                                         "pagination": {
-                                            "properties": {
-                                                "count": {
-                                                    "type": "integer"
-                                                },
-                                                "total": {
-                                                    "type": "integer"
-                                                },
-                                                "per_page": {
-                                                    "type": "integer"
-                                                },
-                                                "page": {
-                                                    "type": "integer"
-                                                },
-                                                "pages": {
-                                                    "type": "integer"
-                                                }
-                                            },
-                                            "type": "object"
+                                            "$ref": "#/components/schemas/Pagination"
                                         }
                                     },
                                     "type": "object"
@@ -926,6 +892,26 @@
                             "type": "object"
                         },
                         "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Pagination": {
+                "properties": {
+                    "count": {
+                        "type": "integer"
+                    },
+                    "total": {
+                        "type": "integer"
+                    },
+                    "per_page": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "pages": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
