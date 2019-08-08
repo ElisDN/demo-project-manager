@@ -132,13 +132,7 @@ class TasksController extends AbstractController
      *                     @OA\Property(property="name", type="string"),
      *                 )),
      *             )),
-     *             @OA\Property(property="pagination", type="object",
-     *                 @OA\Property(property="count", type="integer"),
-     *                 @OA\Property(property="total", type="integer"),
-     *                 @OA\Property(property="per_page", type="integer"),
-     *                 @OA\Property(property="page", type="integer"),
-     *                 @OA\Property(property="pages", type="integer"),
-     *             ),
+     *             @OA\Property(property="pagination", ref="#/components/schemas/Pagination"),
      *         )
      *     ),
      *     security={{"oauth2": {"common"}}}
