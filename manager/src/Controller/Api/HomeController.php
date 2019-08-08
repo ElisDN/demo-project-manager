@@ -41,6 +41,15 @@ use Symfony\Component\Routing\Annotation\Route;
  *         @OA\Property(property="propertyPath", type="string"),
  *         @OA\Property(property="title", type="string"),
  *     ))
+ * ),
+ * @OA\Schema(
+ *     schema="Pagination",
+ *     type="object",
+ *     @OA\Property(property="count", type="integer"),
+ *     @OA\Property(property="total", type="integer"),
+ *     @OA\Property(property="per_page", type="integer"),
+ *     @OA\Property(property="page", type="integer"),
+ *     @OA\Property(property="pages", type="integer"),
  * )
  */
 class HomeController extends AbstractController
