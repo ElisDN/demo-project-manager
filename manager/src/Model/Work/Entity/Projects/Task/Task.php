@@ -125,6 +125,11 @@ class Task implements AggregateRoot
      * @ORM\OrderBy({"id" = "ASC"})
      */
     private $changes;
+    /**
+     * @ORM\Version()
+     * @ORM\Column(type="integer")
+     */
+    private $version;
 
     public function __construct(
         Id $id,
