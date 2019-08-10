@@ -46,6 +46,11 @@ class Comment
      * @ORM\Column(type="datetime_immutable", nullable=true, name="update_date")
      */
     private $updateDate;
+    /**
+     * @ORM\Version()
+     * @ORM\Column(type="integer")
+     */
+    private $version;
 
     public function __construct(AuthorId $author, Id $id, \DateTimeImmutable $date, string $text, Entity $entity)
     {
