@@ -53,6 +53,11 @@ class Project
      * @ORM\OneToMany(targetEntity="Membership", mappedBy="project", orphanRemoval=true, cascade={"all"})
      */
     private $memberships;
+    /**
+     * @ORM\Version()
+     * @ORM\Column(type="integer")
+     */
+    private $version;
 
     public function __construct(Id $id, string $name, int $sort)
     {
