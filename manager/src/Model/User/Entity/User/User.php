@@ -81,6 +81,11 @@ class User
      * @ORM\OneToMany(targetEntity="Network", mappedBy="user", orphanRemoval=true, cascade={"persist"})
      */
     private $networks;
+    /**
+     * @ORM\Version()
+     * @ORM\Column(type="integer")
+     */
+    private $version;
 
     private function __construct(Id $id, \DateTimeImmutable $date, Name $name)
     {
