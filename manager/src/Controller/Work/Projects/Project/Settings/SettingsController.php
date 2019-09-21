@@ -153,6 +153,6 @@ class SettingsController extends AbstractController
             $this->addFlash('error', $e->getMessage());
         }
 
-        return $this->redirectToRoute('work.projects.project.settings', ['project_id' => $project->getId()]);
+        return $this->redirectToRoute('work.projects');
     }
 }
