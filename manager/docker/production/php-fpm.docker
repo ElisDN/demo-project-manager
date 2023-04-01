@@ -2,7 +2,9 @@ FROM php:7.3-cli AS php-cli-builder
 
 RUN apt-get update && apt-get install -y unzip
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --quiet
+RUN curl -sS https://getcomposer.org/download/1.10.26/composer.phar --output ./composer.phar \
+    && chmod +x composer.phar \
+    && mv composer.phar /usr/local/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 

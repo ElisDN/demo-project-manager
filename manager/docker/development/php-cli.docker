@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y libpq-dev unzip \
 
 COPY ./php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --quiet
+RUN curl -sS https://getcomposer.org/download/1.10.26/composer.phar --output ./composer.phar \
+    && chmod +x composer.phar \
+    && mv composer.phar /usr/local/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
